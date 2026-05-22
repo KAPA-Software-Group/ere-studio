@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PlaceholderVisual } from "@/components/placeholder-visual"
+import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
 import { ProjectCard } from "@/components/project-card"
 import { RevealObserver } from "@/components/reveal-observer"
 import { projects } from "@/lib/projects"

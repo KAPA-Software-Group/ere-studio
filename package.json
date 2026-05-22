@@ -1,20 +1,10 @@
 {
-  "scripts": {
-    "dev": "npm --prefix next-app run dev",
-    "build": "npm --prefix next-app run build",
-    "lint": "npm --prefix next-app run lint",
-    "typecheck": "npm --prefix next-app run typecheck"
-  },
   "dependencies": {
-    "next": "16.2.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "@paper-design/shaders-react": "^0.0.72",
+    "@react-three/fiber": "^9.5.0",
+    "three": "^0.183.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.1",
-    "@types/node": "25.9.1",
-    "@types/react": "19.2.15",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "@types/three": "^0.183.1"
   }
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { PageHero } from "@/components/page-hero"
-import { PlaceholderVisual } from "@/components/placeholder-visual"
+import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
 import { RevealObserver } from "@/components/reveal-observer"
 
 export const metadata: Metadata = {

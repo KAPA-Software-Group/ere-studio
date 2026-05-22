@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Project } from "@/lib/projects"
-import { PlaceholderVisual } from "@/components/placeholder-visual"
+import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
 
 type ProjectCardProps = {
   project: Project
