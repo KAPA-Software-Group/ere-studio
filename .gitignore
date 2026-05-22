@@ -1,0 +1,11 @@
+.next/
+node_modules/
+out/
+build/
+.env*
+*.log
+*.tsbuildinfo
+.server-logs/
+next-app/.next/
+next-app/node_modules/
+next-app/.server-logs/
