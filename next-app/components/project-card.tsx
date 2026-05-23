@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Project } from "@/lib/projects"
-import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
+import { ProjectMedia } from "@/components/ui/project-media"
 
 type ProjectCardProps = {
   project: Project
@@ -9,10 +9,11 @@ type ProjectCardProps = {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link href={`/portfolio/${project.slug}`} className="project-card">
-      <PlaceholderVisual
-        label={`${project.title} visual placeholder`}
-        mood={project.mood}
-        size="portrait"
+      <ProjectMedia
+        src={project.hero.src}
+        alt={project.hero.alt}
+        shape="portrait"
+        sizes="(min-width: 1080px) 25vw, 100vw"
       />
       <div className="project-card-content">
         <span className="project-index">{project.year}</span>

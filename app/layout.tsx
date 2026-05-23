@@ -20,7 +20,7 @@ const spectral = Spectral({
 export const metadata: Metadata = {
   title: "ERE Studio - Interior and Spatial Design",
   description:
-    "Base website structure for ERE Studio, an interior and spatial design studio.",
+    "ERE Studio is an interior and spatial design practice for residential, hospitality, renovation, and hybrid spaces.",
 }
 
 export default function RootLayout({
@@ -29,7 +29,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${spectral.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${dmSans.variable} ${spectral.variable}`}
+    >
       <body>{children}</body>
     </html>
   )

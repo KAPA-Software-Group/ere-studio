@@ -17,7 +17,8 @@ export function SiteFooter() {
             ERE Studio
           </Link>
           <p>
-            Interior and spatial design for calm, expressive, functional spaces.
+            Interior and spatial design for rooms with strong bones, quiet
+            materials, and a clear reason to exist.
           </p>
         </div>
 
@@ -31,7 +32,7 @@ export function SiteFooter() {
 
         <div className="footer-meta">
           <span>Toronto / Paris / Remote</span>
-          <span>Base structure</span>
+          <span>Project inquiries open for 2026</span>
         </div>
       </div>
     </footer>

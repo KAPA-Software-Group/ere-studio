@@ -1,22 +1,33 @@
 import Link from "next/link"
-import type { Project } from "@/lib/projects"
-import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
+import { ProjectMedia } from "@/components/ui/project-media"
+import { Parallax } from "@/components/parallax"
+import { RevealObserver } from "@/components/reveal-observer"
+import { getAdjacentProject, type Project } from "@/lib/projects"
 
 type ProjectDetailPageProps = {
   project: Project
 }
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
+  const next = getAdjacentProject(project.slug)
+
   return (
     <main className="page-shell">
+      <RevealObserver />
+
       <section className="project-hero">
         <div className="section-inner project-hero-grid">
           <div className="project-hero-copy">
             <Link href="/portfolio" className="text-link">
-              Back to portfolio
+              Selected work
             </Link>
-            <h1 className="page-title">{project.title}</h1>
-            <dl className="project-meta">
+            <p className="section-label reveal">
+              {project.type} / {project.year}
+            </p>
+            <h1 className="page-title reveal reveal-delay-1">
+              {project.title}
+            </h1>
+            <dl className="project-meta reveal reveal-delay-2">
               <div>
                 <dt>Location</dt>
                 <dd>{project.location}</dd>
@@ -26,80 +37,111 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                 <dd>{project.year}</dd>
               </div>
               <div>
+                <dt>Scope</dt>
+                <dd>{project.scope}</dd>
+              </div>
+              <div>
+                <dt>Materials</dt>
+                <dd>{project.materials}</dd>
+              </div>
+              <div>
                 <dt>Category</dt>
                 <dd>{project.category}</dd>
               </div>
+              <div>
+                <dt>Collaborator</dt>
+                <dd>{project.collaborator}</dd>
+              </div>
             </dl>
           </div>
-          <PlaceholderVisual
-            label={`${project.title} hero placeholder`}
-            mood={project.mood}
-            size="wide"
-          />
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-inner split-editorial">
-          <p className="section-label">Project Overview</p>
-          <div className="editorial-copy">
-            <h2>Placeholder overview for spatial intent and atmosphere.</h2>
-            <p>
-              This area will hold the project summary, client goals, key spatial
-              moves, and the editorial story once final copy and photography are
-              ready.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block muted-section">
-        <div className="section-inner two-column-copy">
-          <article>
-            <span className="number-label">01</span>
-            <h2>Design Brief</h2>
-            <p>
-              Placeholder brief content describing the original context,
-              functional needs, spatial constraints, and desired emotional
-              direction.
-            </p>
-          </article>
-          <article>
-            <span className="number-label">02</span>
-            <h2>Design Approach</h2>
-            <p>
-              Placeholder approach content outlining material direction, layout
-              strategy, atmosphere, and how the studio shaped the experience.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-inner">
-          <div className="section-heading-row">
-            <p className="section-label">Gallery</p>
-            <h2>Image grid placeholder</h2>
-          </div>
-          <div className="gallery-grid">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <PlaceholderVisual
-                key={item}
-                label={`Gallery placeholder ${item}`}
-                mood={project.mood}
-                size={item % 3 === 0 ? "wide" : "square"}
+          <div className="reveal reveal-delay-2">
+            <Parallax amount={0.05}>
+              <ProjectMedia
+                src={project.hero.src}
+                alt={project.hero.alt}
+                shape="tall"
+                priority
+                sizes="(min-width: 1080px) 56vw, 100vw"
               />
-            ))}
+            </Parallax>
           </div>
+        </div>
+      </section>
+
+      <section className="project-intro">
+        <div className="section-inner project-intro-grid">
+          <h2 className="reveal">{project.intro}</h2>
+          <div className="project-intro-body reveal reveal-delay-1">
+            <article>
+              <p className="intro-eyebrow">01 / Brief</p>
+              <p>{project.brief}</p>
+            </article>
+            <article>
+              <p className="intro-eyebrow">02 / Approach</p>
+              <p>{project.approach}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="section-inner cine-gallery">
+          {project.gallery.map((image, index) => (
+            <div key={image.src} className={`reveal reveal-delay-${index + 1}`}>
+              <ProjectMedia
+                src={image.src}
+                alt={image.alt}
+                shape={
+                  index === 0 ? "wide" : index === 1 ? "tall" : "panoramic"
+                }
+                caption={image.alt}
+                sizes={
+                  index === 2 ? "100vw" : "(min-width: 1080px) 50vw, 100vw"
+                }
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pullquote">
+        <blockquote className="reveal">
+          {project.pullquote}
+          <cite>{project.collaborator}</cite>
+        </blockquote>
+      </section>
+
+      <section className="next-project">
+        <div className="section-inner">
+          <Link
+            href={`/portfolio/${next.slug}`}
+            className="next-project-link reveal"
+          >
+            <div>
+              <p className="next-project-label">Next project</p>
+              <h2 className="next-project-title">
+                {next.title}
+                <span className="next-project-arrow" aria-hidden="true">
+                  -&gt;
+                </span>
+              </h2>
+            </div>
+            <ProjectMedia
+              src={next.hero.src}
+              alt={next.hero.alt}
+              shape="wide"
+              sizes="(min-width: 1080px) 40vw, 100vw"
+            />
+          </Link>
         </div>
       </section>
 
       <section className="footer-cta">
-        <div className="section-inner footer-cta-inner">
-          <p className="section-label">Start a Project</p>
+        <div className="section-inner footer-cta-inner reveal">
+          <p className="section-label">Working together</p>
           <h2>Have a space with a similar level of intent?</h2>
           <Link href="/contact" className="btn-primary">
-            Start a Project
+            Start a project
           </Link>
         </div>
       </section>

@@ -29,7 +29,7 @@ export async function generateMetadata({
 
   return {
     title: `${project.title} | ERE Studio`,
-    description: `${project.title} placeholder project page for ERE Studio.`,
+    description: `${project.title}, a ${project.type.toLowerCase()} project by ERE Studio in ${project.location}.`,
   }
 }
 

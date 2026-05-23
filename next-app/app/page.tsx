@@ -1,14 +1,26 @@
 import Link from "next/link"
-import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectMedia } from "@/components/ui/project-media"
+import { Parallax } from "@/components/parallax"
 import { RevealObserver } from "@/components/reveal-observer"
 import { projects } from "@/lib/projects"
 
 const services = [
-  "Residential Interiors",
-  "Hospitality & Commercial Spaces",
-  "Hybrid Spaces",
-  "Renovation + Restoration",
+  {
+    title: "Residential Interiors",
+    copy: "Private rooms planned around routine, storage, light, and the pieces that deserve to stay.",
+  },
+  {
+    title: "Hospitality & Commercial Spaces",
+    copy: "Guest-facing interiors with durable details, clean circulation, and a strong memory of place.",
+  },
+  {
+    title: "Hybrid Spaces",
+    copy: "Homes, salons, workrooms, and retail settings that need to shift use without losing character.",
+  },
+  {
+    title: "Renovation + Restoration",
+    copy: "Existing buildings edited with care for proportion, inherited material, and modern use.",
+  },
 ]
 
 const processSteps = [
@@ -18,35 +30,83 @@ const processSteps = [
   "Execution Support",
 ]
 
+const featuredLayout = [1, 2, 3, 4] as const
+
 export default function Home() {
+  const heroProject = projects[0]
+  const heroSecondary = projects[1]
+  const heroTertiary = projects[2]
+  const featured = projects.slice(0, 4)
+
   return (
     <main className="page-shell">
       <RevealObserver />
 
       <section className="home-hero">
-        <div className="section-inner home-hero-grid">
-          <div className="hero-copy">
-            <p className="section-label reveal">ERE Studio</p>
-            <h1 className="hero-title reveal reveal-delay-1">
-              Interior and spatial design for expressive, functional spaces.
-            </h1>
-            <p className="hero-sub reveal reveal-delay-2">
-              Placeholder introduction for a studio practice shaped around
-              calm composition, material sensitivity, and spaces with a clear
-              point of view.
-            </p>
-            <div className="hero-actions reveal reveal-delay-3">
-              <Link href="/portfolio" className="btn-primary">
-                View Portfolio
-              </Link>
-              <Link href="/contact" className="btn-ghost">
-                Start a Project
-              </Link>
-            </div>
+        <div className="section-inner home-hero-frame">
+          <p className="hero-wordmark reveal" aria-label="ERE Studio">
+            ERE
+            <span>Studio</span>
+          </p>
+
+          <div className="hero-minimal-copy reveal reveal-delay-1">
+            <p>Interior / Spatial Design</p>
+            <h1>Rooms with memory.</h1>
           </div>
 
-          <div className="hero-visual-wrap reveal reveal-delay-2">
-            <PlaceholderVisual label="Hero visual placeholder" size="wide" />
+          <Link
+            href={`/portfolio/${heroProject.slug}`}
+            className="hero-primary-image reveal reveal-delay-1"
+            aria-label={`View ${heroProject.title}`}
+          >
+            <Parallax amount={0.035}>
+              <ProjectMedia
+                src={heroProject.hero.src}
+                alt={heroProject.hero.alt}
+                shape="wide"
+                priority
+                sizes="(min-width: 1080px) 72vw, 100vw"
+              />
+            </Parallax>
+          </Link>
+
+          <Link
+            href={`/portfolio/${heroSecondary.slug}`}
+            className="hero-side-image hero-side-one reveal reveal-delay-2"
+            aria-label={`View ${heroSecondary.title}`}
+          >
+            <ProjectMedia
+              src={heroSecondary.hero.src}
+              alt={heroSecondary.hero.alt}
+              shape="tall"
+              sizes="(min-width: 1080px) 24vw, 70vw"
+            />
+          </Link>
+
+          <Link
+            href={`/portfolio/${heroTertiary.slug}`}
+            className="hero-side-image hero-side-two reveal reveal-delay-3"
+            aria-label={`View ${heroTertiary.title}`}
+          >
+            <ProjectMedia
+              src={heroTertiary.hero.src}
+              alt={heroTertiary.hero.alt}
+              shape="square"
+              sizes="(min-width: 1080px) 18vw, 46vw"
+            />
+          </Link>
+
+          <p className="hero-project-note reveal reveal-delay-3">
+            Paris / Toronto / Miami / Bale
+          </p>
+
+          <div className="hero-actions hero-minimal-actions reveal reveal-delay-3">
+            <Link href="/portfolio" className="btn-primary">
+              Portfolio
+            </Link>
+            <Link href="/contact" className="btn-ghost">
+              Inquire
+            </Link>
           </div>
         </div>
       </section>
@@ -54,37 +114,65 @@ export default function Home() {
       <section className="section-block">
         <div className="section-inner">
           <div className="section-heading-row">
-            <p className="section-label reveal">Featured Projects</p>
-            <h2 className="reveal reveal-delay-1">
-              Selected placeholders for review.
+            <p className="section-label reveal">Selected Work / 2021-2025</p>
+            <h2 className="reveal reveal-delay-1 draw-line">
+              Four projects across four cities, each composed around a single
+              material gesture.
             </h2>
           </div>
-          <div className="project-grid">
-            {projects.map((project, index) => (
-              <div
-                key={project.slug}
-                className={`reveal reveal-delay-${index + 1}`}
-              >
-                <ProjectCard project={project} />
-              </div>
-            ))}
+
+          <div className="featured-grid">
+            {featured.map((project, index) => {
+              const slot = featuredLayout[index]
+              return (
+                <Link
+                  key={project.slug}
+                  href={`/portfolio/${project.slug}`}
+                  className={`featured-item featured-link featured-item-${slot} reveal reveal-delay-${index + 1}`}
+                >
+                  <ProjectMedia
+                    src={project.hero.src}
+                    alt={project.hero.alt}
+                    shape={slot === 1 || slot === 4 ? "wide" : "tall"}
+                  />
+                  <div>
+                    <h3>{project.title}</h3>
+                    <div className="featured-item-meta">
+                      <span>{project.year}</span>
+                      <span className="sep" aria-hidden="true">
+                        /
+                      </span>
+                      <span>{project.type}</span>
+                      <span className="sep" aria-hidden="true">
+                        /
+                      </span>
+                      <span>{project.location}</span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <section className="section-block editorial-section">
-        <div className="section-inner split-editorial">
-          <p className="section-label reveal">Studio Positioning</p>
-          <div className="editorial-copy reveal reveal-delay-1">
-            <h2>
-              A placeholder philosophy for interiors that balance restraint,
-              warmth, and useful spatial drama.
-            </h2>
+      <section className="editorial-pull">
+        <div className="section-inner editorial-pull-grid">
+          <h2 className="reveal">
+            We work the way a museum hangs a single painting: choose the wall,
+            then live with it for a season.
+          </h2>
+          <div className="editorial-pull-body reveal reveal-delay-1">
             <p>
-              This editorial section will later introduce the studio point of
-              view, design values, and the type of client experience ERE Studio
-              creates across residential, hospitality, commercial, and hybrid
-              spaces.
+              ERE Studio composes interiors for clients who treat their spaces
+              as long projects, not transactions. The practice is small by
+              choice. We take on four to six projects a year and accompany each
+              from first walk-through through final commissioning.
+            </p>
+            <p>
+              The work tends toward limewashed plaster and warm joinery, but
+              there is no signature material. Every project begins by listening
+              to the building.
             </p>
           </div>
         </div>
@@ -92,25 +180,21 @@ export default function Home() {
 
       <section className="section-block">
         <div className="section-inner">
-          <div className="section-heading-row">
-            <p className="section-label reveal">Services Preview</p>
-            <h2 className="reveal reveal-delay-1">Core design directions.</h2>
-          </div>
-          <div className="service-preview-grid">
+          <h2 className="display-callout reveal">
+            Four directions, <span className="hero-accent">one studio.</span>
+          </h2>
+          <div className="service-preview-grid stagger">
             {services.map((service, index) => (
               <Link
-                key={service}
+                key={service.title}
                 href="/services"
-                className={`service-card reveal reveal-delay-${index + 1}`}
+                className="service-card"
               >
                 <span className="number-label">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3>{service}</h3>
-                <p>
-                  Placeholder copy for scope, deliverables, and the studio
-                  approach to this service category.
-                </p>
+                <h3>{service.title}</h3>
+                <p>{service.copy}</p>
               </Link>
             ))}
           </div>
@@ -119,16 +203,13 @@ export default function Home() {
 
       <section className="section-block muted-section">
         <div className="section-inner">
-          <div className="section-heading-row">
-            <p className="section-label reveal">Process Preview</p>
-            <h2 className="reveal reveal-delay-1">A measured path from idea to space.</h2>
-          </div>
-          <div className="process-strip">
+          <h2 className="display-callout reveal">
+            A measured path from first walk-through to{" "}
+            <span className="hero-accent">commissioning.</span>
+          </h2>
+          <div className="process-strip stagger">
             {processSteps.map((step, index) => (
-              <article
-                key={step}
-                className={`process-step reveal reveal-delay-${index + 1}`}
-              >
+              <article key={step} className="process-step">
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{step}</h3>
               </article>
@@ -139,10 +220,10 @@ export default function Home() {
 
       <section className="footer-cta">
         <div className="section-inner footer-cta-inner reveal">
-          <p className="section-label">Start a Project</p>
-          <h2>Placeholder call-to-action for new interiors and spatial work.</h2>
+          <p className="section-label">Start a project</p>
+          <h2>Working on a residence, a small hotel, or a hybrid space?</h2>
           <Link href="/contact" className="btn-primary">
-            Start a Project
+            Start a project
           </Link>
         </div>
       </section>

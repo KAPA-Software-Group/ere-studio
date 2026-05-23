@@ -1,5 +1,3 @@
-import { PlaceholderVisual } from "@/components/ui/placeholder-visual"
-
 export function HeroSection() {
   return (
     <section className="section">
@@ -10,12 +8,18 @@ export function HeroSection() {
             Interior and spatial design for expressive, functional spaces.
           </h1>
           <p className="hero-sub">
-            Placeholder structure shell matching the reference project root
-            layout. The full working site lives in the `next-app` directory.
+            A focused interior practice for residences, hospitality rooms, and
+            hybrid spaces that need proportion, material clarity, and a strong
+            working brief.
           </p>
         </div>
 
-        <PlaceholderVisual />
+        <figure className="studio-visual">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80"
+            alt="Pale interior with tall windows, quiet plaster walls, and warm timber flooring."
+          />
+        </figure>
       </div>
     </section>
   )
