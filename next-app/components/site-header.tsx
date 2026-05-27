@@ -1,21 +1,22 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/services", label: "Services" },
-  { href: "/process", label: "Process" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Get Started" },
 ]
+
+const LEFT_NAV_ITEMS = NAV_ITEMS.slice(0, 2)
+const RIGHT_NAV_ITEMS = NAV_ITEMS.slice(2)
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -30,78 +31,44 @@ export function SiteHeader() {
 
   return (
     <header
-      className={[
-        "site-header",
-        scrolled ? "site-header-scrolled" : "",
-        menuOpen ? "site-header-open" : "",
-      ]
+      className={["site-header", scrolled ? "site-header-scrolled" : ""]
         .filter(Boolean)
         .join(" ")}
     >
-      <Link href="/" className="nav-logo" aria-label="ERE Studio home">
-        <span className="nav-logo-mark" aria-hidden="true" />
-        <span className="nav-logo-text">ERE Studio</span>
-      </Link>
-
-      <nav className="nav-links" aria-label="Primary navigation">
-        {NAV_ITEMS.map((item) => (
+      <nav className="nav-links nav-links-left" aria-label="Primary navigation left">
+        {LEFT_NAV_ITEMS.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={isActivePath(item.href) ? "is-active" : undefined}
-            onClick={() => setMenuOpen(false)}
           >
             {item.label}
           </Link>
         ))}
       </nav>
 
-      <div className="nav-actions">
-        <Link href="/contact" className="nav-cta">
-          Start a Project
-        </Link>
-        <button
-          type="button"
-          className="nav-menu-toggle"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </button>
-      </div>
+      <Link href="/" className="nav-logo" aria-label="ERE Studio home">
+        <Image
+          src="/brand/ere-studio-logo.webp"
+          alt="Ere Studio"
+          width={770}
+          height={174}
+          priority
+          className="nav-logo-image"
+        />
+      </Link>
 
-      <div
-        id="mobile-navigation"
-        className={["mobile-nav", menuOpen ? "is-open" : ""]
-          .filter(Boolean)
-          .join(" ")}
-      >
-        {NAV_ITEMS.map((item) => (
+      <nav className="nav-links nav-links-right" aria-label="Primary navigation right">
+        {RIGHT_NAV_ITEMS.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={[
-              "mobile-nav-link",
-              isActivePath(item.href) ? "is-active" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() => setMenuOpen(false)}
+            className={isActivePath(item.href) ? "is-active" : undefined}
           >
             {item.label}
           </Link>
         ))}
-        <Link
-          href="/contact"
-          className="mobile-nav-cta"
-          onClick={() => setMenuOpen(false)}
-        >
-          Start a Project
-        </Link>
-      </div>
+      </nav>
     </header>
   )
 }

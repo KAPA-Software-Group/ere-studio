@@ -1,35 +1,35 @@
 import type { Metadata } from "next"
-import { PageHero } from "@/components/page-hero"
 import { ContactForm } from "@/components/contact-form"
+import { RevealObserver } from "@/components/reveal-observer"
 
 export const metadata: Metadata = {
-  title: "Contact | ERE Studio",
+  title: "Get Started | ERE Studio",
   description:
-    "Contact ERE Studio about residential, hospitality, renovation, and hybrid-space interior projects.",
+    "Start a new interior or spatial design project with ERE Studio.",
 }
 
 export default function ContactPage() {
   return (
-    <main className="page-shell">
-      <PageHero
-        eyebrow="Contact"
-        title="Tell us what the room needs to become."
-        copy="Share the property, the constraints, and the moment that made the project necessary. The first response usually clarifies fit, timing, and the right working scope."
-      />
+    <main className="page-shell contact-start-page">
+      <RevealObserver />
 
-      <section className="section-block">
-        <div className="section-inner contact-grid">
-          <div className="contact-aside">
-            <p className="section-label">Start a Project</p>
-            <h2>Share the shape of the space.</h2>
-            <p>
-              The most useful notes are specific: what exists now, what is not
-              working, when decisions need to be made, and who will build the
-              work.
-            </p>
+      <section className="contact-start-section">
+        <div className="section-inner contact-start-grid">
+          <div className="contact-start-copy reveal reveal-delay-1">
+            <h1>
+              <span>Want to</span>
+              <span>
+                <em>start</em>
+              </span>
+              <span>
+                <em>a</em> new
+              </span>
+              <span>project?</span>
+            </h1>
           </div>
-
-          <ContactForm />
+          <div className="contact-start-form reveal">
+            <ContactForm />
+          </div>
         </div>
       </section>
     </main>

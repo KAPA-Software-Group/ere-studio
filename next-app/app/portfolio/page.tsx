@@ -1,79 +1,68 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
-import { PageHero } from "@/components/page-hero"
-import { ProjectMedia } from "@/components/ui/project-media"
 import { RevealObserver } from "@/components/reveal-observer"
 import { projects } from "@/lib/projects"
 
 export const metadata: Metadata = {
-  title: "Selected Work | ERE Studio",
+  title: "Project Portfolio | ERE Studio",
   description:
-    "Selected interior and spatial projects by ERE Studio, 2021-2025, across Paris, Toronto, Miami, and the Istrian coast.",
+    "Project portfolio by ERE Studio, 2021-2025, across residences, commercial spaces, renovation, and hybrid interiors.",
 }
-
-const layoutSlots = [1, 2, 3, 4] as const
 
 export default function PortfolioPage() {
   return (
-    <main className="page-shell">
+    <main className="page-shell portfolio-page">
       <RevealObserver />
-      <PageHero
-        eyebrow="Selected Work / 2021-2025"
-        title="Four rooms, four climates, one working standard."
-        copy="The studio releases a small archive each year. The work shown is the work we would walk a client through in person: residences, restaurants, seasonal houses, held to the same drafting standard."
-      />
 
-      <section className="section-block">
-        <div className="section-inner">
-          <div className="portfolio-archive">
-            {projects.map((project, index) => {
-              const slot = layoutSlots[index] ?? 1
-              const shape = slot === 1 || slot === 4 ? "wide" : "tall"
-              return (
-                <Link
-                  key={project.slug}
-                  href={`/portfolio/${project.slug}`}
-                  className={`archive-item archive-item-${slot} reveal reveal-delay-${(index % 4) + 1}`}
-                >
-                  <ProjectMedia
-                    src={project.hero.src}
-                    alt={project.hero.alt}
-                    shape={shape}
-                  />
-                  <div className="archive-title-row">
-                    <h3>{project.title}</h3>
-                    <span className="archive-year">{project.year}</span>
-                  </div>
-                  <dl className="archive-meta">
-                    <div>
-                      <strong>Location</strong>
-                      <span>{project.location}</span>
-                    </div>
-                    <div>
-                      <strong>Type</strong>
-                      <span>{project.type}</span>
-                    </div>
-                    <div>
-                      <strong>Scope</strong>
-                      <span>{project.scope}</span>
-                    </div>
-                  </dl>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
+      <section className="portfolio-editorial-hero">
+        <h1 className="reveal">Project Portfolio</h1>
       </section>
 
-      <section className="footer-cta">
-        <div className="section-inner footer-cta-inner reveal">
-          <p className="section-label">Working together</p>
-          <h2>
-            The next archive opens in early 2026. Three project slots remain.
-          </h2>
-          <Link href="/contact" className="btn-primary">
-            Start a project
-          </Link>
+      <section className="portfolio-editorial-section">
+        <div className="portfolio-editorial-grid">
+          {projects.map((project, index) => {
+            const isTextFirst = index % 2 === 1
+            return (
+              <article
+                key={project.slug}
+                className={`portfolio-editorial-pair portfolio-editorial-pair-${index + 1}`}
+              >
+                <Link
+                  href={`/portfolio/${project.slug}`}
+                  className={`portfolio-photo-card reveal reveal-delay-${(index % 4) + 1}`}
+                >
+                  <Image
+                    src={project.hero.src}
+                    alt={project.hero.alt}
+                    fill
+                    sizes="(min-width: 900px) 42vw, 92vw"
+                  />
+                </Link>
+                <Link
+                  href={`/portfolio/${project.slug}`}
+                  className={`portfolio-story-card reveal reveal-delay-${((index + 1) % 4) + 1} ${
+                    isTextFirst ? "portfolio-story-first" : ""
+                  }`}
+                >
+                  <p className="portfolio-story-meta">
+                    {project.location} / {project.year}
+                  </p>
+                  <h2>{project.title}</h2>
+                  <div className="portfolio-story-image">
+                    <Image
+                      src={project.gallery[0]?.src ?? project.hero.src}
+                      alt={project.gallery[0]?.alt ?? project.hero.alt}
+                      fill
+                      sizes="(min-width: 900px) 18vw, 70vw"
+                    />
+                  </div>
+                  <p>{project.intro}</p>
+                  <span>View Project</span>
+                </Link>
+              </article>
+            )
+          })}
         </div>
       </section>
     </main>

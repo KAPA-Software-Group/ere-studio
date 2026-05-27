@@ -2,15 +2,7 @@
 
 import { useMemo, useState, type FormEvent } from "react"
 
-type FieldName =
-  | "name"
-  | "email"
-  | "phone"
-  | "location"
-  | "projectType"
-  | "timeline"
-  | "budget"
-  | "description"
+type FieldName = "name" | "email" | "message"
 
 type FieldConfig = {
   label: string
@@ -25,67 +17,30 @@ const fields: FieldConfig[] = [
     label: "Name",
     name: "name",
     type: "text",
-    helper: "The main client or project lead.",
+    helper: "Your name.",
     required: true,
   },
   {
     label: "Email",
     name: "email",
     type: "email",
-    helper: "Used for the first response only.",
+    helper: "Where we can reach you.",
     required: true,
-  },
-  {
-    label: "Phone",
-    name: "phone",
-    type: "tel",
-    helper: "Optional, useful for active sites.",
-  },
-  {
-    label: "Location",
-    name: "location",
-    type: "text",
-    helper: "City, country, or property address.",
-    required: true,
-  },
-  {
-    label: "Project type",
-    name: "projectType",
-    type: "text",
-    helper: "Residence, restaurant, hotel, retail, or hybrid.",
-  },
-  {
-    label: "Timeline",
-    name: "timeline",
-    type: "text",
-    helper: "Approximate start date or opening date.",
-  },
-  {
-    label: "Budget range",
-    name: "budget",
-    type: "text",
-    helper: "A working range helps define the right scope.",
   },
 ]
 
 const initialValues: Record<FieldName, string> = {
   name: "",
   email: "",
-  phone: "",
-  location: "",
-  projectType: "",
-  timeline: "",
-  budget: "",
-  description: "",
+  message: "",
 }
 
 function validate(values: Record<FieldName, string>) {
   const nextErrors: Partial<Record<FieldName, string>> = {}
 
   if (!values.name.trim()) nextErrors.name = "Add a contact name."
-  if (!values.location.trim()) nextErrors.location = "Add the project location."
-  if (!values.description.trim()) {
-    nextErrors.description = "Describe the space in a few lines."
+  if (!values.message.trim()) {
+    nextErrors.message = "Add a short message."
   }
 
   const email = values.email.trim()
@@ -107,14 +62,9 @@ export function ContactForm() {
     const lines = [
       `Name: ${values.name}`,
       `Email: ${values.email}`,
-      `Phone: ${values.phone || "Not provided"}`,
-      `Location: ${values.location}`,
-      `Project type: ${values.projectType || "Not provided"}`,
-      `Timeline: ${values.timeline || "Not provided"}`,
-      `Budget range: ${values.budget || "Not provided"}`,
       "",
-      "Project description:",
-      values.description,
+      "Message:",
+      values.message,
     ]
 
     return lines.join("\n")
@@ -171,29 +121,27 @@ export function ContactForm() {
       ))}
 
       <label className="form-field form-field-full">
-        <span>Project description</span>
+        <span>Message</span>
         <textarea
-          name="description"
-          rows={7}
-          value={values.description}
-          aria-invalid={Boolean(errors.description)}
-          aria-describedby="description-helper description-error"
+          name="message"
+          rows={8}
+          value={values.message}
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby="message-helper message-error"
           required
           onChange={(event) => {
             setValues((current) => ({
               ...current,
-              description: event.target.value,
+              message: event.target.value,
             }))
-            if (errors.description) {
-              setErrors((current) => ({ ...current, description: undefined }))
+            if (errors.message) {
+              setErrors((current) => ({ ...current, message: undefined }))
             }
           }}
         />
-        <small id="description-helper">
-          Include the property type, current condition, and what has to change.
-        </small>
-        <strong id="description-error" role="alert">
-          {errors.description ?? ""}
+        <small id="message-helper">Tell us a little about the project.</small>
+        <strong id="message-error" role="alert">
+          {errors.message ?? ""}
         </strong>
       </label>
 

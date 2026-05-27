@@ -1,8 +1,27 @@
 import type { Metadata } from "next"
-import { PageHero } from "@/components/page-hero"
+import Image from "next/image"
 import { RevealObserver } from "@/components/reveal-observer"
-import { ProjectMedia } from "@/components/ui/project-media"
-import { projects } from "@/lib/projects"
+
+const shapedSpaces = [
+  {
+    number: "01",
+    title: "Interior Design + Spatial Planning",
+    description:
+      "We create interiors that are both beautiful and functional, with thoughtful layouts that support the way you live. From furniture placement to atmosphere, every element is considered to make the space feel balanced and complete.",
+  },
+  {
+    number: "02",
+    title: "Hybrid Spaces",
+    description:
+      "We design flexible spaces that can shift with your needs, whether that means blending work and home, entertaining and everyday living, or comfort and functionality. The goal is to create rooms that feel effortless, adaptable, and refined without losing warmth or personality.",
+  },
+  {
+    number: "03",
+    title: "Renovation + Restoration",
+    description:
+      "We help reimagine existing spaces while preserving what makes them meaningful. Through careful updates, material selections, and design direction, we bring new life to homes with respect for their original character and lasting value.",
+  },
+]
 
 export const metadata: Metadata = {
   title: "About | ERE Studio",
@@ -10,63 +29,62 @@ export const metadata: Metadata = {
     "About ERE Studio, a small interior and spatial design practice working across residences, hospitality, renovation, and hybrid spaces.",
 }
 
-const aboutSections = [
-  {
-    title: "Studio",
-    copy: "ERE Studio is intentionally small. Each project is led closely from first walk-through to the final edit, with outside makers and consultants brought in only when the work calls for them.",
-  },
-  {
-    title: "Point of View",
-    copy: "The studio favors quiet rooms with strong bones: honest material, a clear threshold, good storage, and one decisive gesture rather than a room full of decoration.",
-  },
-  {
-    title: "Collaboration",
-    copy: "Clients are invited into the decisions that shape use and budget. The studio holds the line on proportion, sequencing, and material quality.",
-  },
-  {
-    title: "Where We Work",
-    copy: "Current work is centered between Toronto, Paris, Miami, and selected remote sites where the project has enough depth to justify the travel.",
-  },
-]
-
 export default function AboutPage() {
-  const studioImage = projects[0].gallery[1]
-
   return (
     <main className="page-shell">
       <RevealObserver />
-      <PageHero
-        eyebrow="About"
-        title="A small studio for rooms with a long memory."
-        copy="ERE Studio works with clients who want fewer, stronger decisions: spaces that feel inevitable after the work is complete."
-      />
 
-      <section className="section-block">
-        <div className="section-inner about-grid">
-          <div className="reveal">
-            <ProjectMedia
-              src={studioImage.src}
-              alt={studioImage.alt}
-              shape="portrait"
-              caption="Reference atmosphere: proportion, filtered light, and original detail held without excess."
-              sizes="(min-width: 1080px) 38vw, 100vw"
+      <section className="about-studio-hero">
+        <div className="section-inner about-studio-grid">
+          <div className="about-studio-copy reveal">
+            <h1>About the studio</h1>
+            <p className="about-studio-subtitle">
+              Elevated interiors, grounded in the way you live.
+            </p>
+          </div>
+          <div className="about-studio-image-wrap reveal reveal-delay-1">
+            <Image
+              src="/projects/midtown-hideaway/magazine-red-room.jpg"
+              alt="A warm red study nook with framed art, flowers, books, and a blue chair."
+              width={924}
+              height={1368}
+              sizes="(min-width: 900px) 44vw, 100vw"
+              className="about-studio-image"
+              priority
             />
           </div>
-          <div className="about-content">
-            {aboutSections.map((section, index) => (
-              <article
-                key={section.title}
-                className={`about-row reveal reveal-delay-${index + 1}`}
-              >
-                <span className="number-label">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h2>{section.title}</h2>
-                  <p>{section.copy}</p>
-                </div>
-              </article>
-            ))}
+        </div>
+      </section>
+
+      <section className="about-studio-note">
+        <div className="section-inner">
+          <div className="about-studio-note-copy reveal">
+            <p>
+              Our studio takes on only a select number of projects each year,
+              allowing us to give every client, space, and detail the attention
+              it deserves. Each project is carefully curated around the client’s
+              taste and vision to ensuring the final design feels personal.
+            </p>
+            <p>
+              From the overall concept to the smallest finishing detail, we
+              focus on creating spaces that are not only beautiful, but deeply
+              personal, practical, and made to be lived in.
+            </p>
+          </div>
+
+          <div className="about-spaces reveal reveal-delay-1">
+            <h2>Spaces We Shape</h2>
+            <div className="about-spaces-list">
+              {shapedSpaces.map((space) => (
+                <details key={space.number} className="about-space-item">
+                  <summary>
+                    <span>{space.number}</span>
+                    <strong>{space.title}</strong>
+                  </summary>
+                  <p>{space.description}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -1,231 +1,155 @@
+import Image from "next/image"
 import Link from "next/link"
-import { ProjectMedia } from "@/components/ui/project-media"
-import { Parallax } from "@/components/parallax"
 import { RevealObserver } from "@/components/reveal-observer"
-import { projects } from "@/lib/projects"
 
-const services = [
+const homeRoomImage = {
+  src: "/projects/midtown-hideaway/opening-image-final.jpg",
+  alt: "Midtown Hideaway hallway looking through a red arch toward blue built-ins and pink boots.",
+}
+
+const studioDirections = [
   {
-    title: "Residential Interiors",
-    copy: "Private rooms planned around routine, storage, light, and the pieces that deserve to stay.",
+    number: "01",
+    title: "Interior Design + Spatial Planning",
+    image: "/projects/midtown-hideaway/magazine-left-bedroom.jpg",
+    alt: "Bedroom interior with patterned wallpaper, warm bedding, and a bedside table.",
   },
   {
-    title: "Hospitality & Commercial Spaces",
-    copy: "Guest-facing interiors with durable details, clean circulation, and a strong memory of place.",
-  },
-  {
+    number: "02",
     title: "Hybrid Spaces",
-    copy: "Homes, salons, workrooms, and retail settings that need to shift use without losing character.",
+    image: "/services/hybrid-spaces.png",
+    alt: "Interior with a glossy brown tiled stove, artwork, mirrors, and seating.",
   },
   {
+    number: "03",
     title: "Renovation + Restoration",
-    copy: "Existing buildings edited with care for proportion, inherited material, and modern use.",
+    image: "/services/renovation-restoration.png",
+    alt: "Restored living room with parquet flooring, fireplace, antique mirror, and sculptural chairs.",
   },
 ]
 
-const processSteps = [
-  "Discovery",
-  "Concept Direction",
-  "Design Development",
-  "Execution Support",
+const transformationSteps = [
+  "Consultation",
+  "Design Concept",
+  "Detailed Planning",
+  "Final Transformation",
 ]
-
-const featuredLayout = [1, 2, 3, 4] as const
 
 export default function Home() {
-  const heroProject = projects[0]
-  const heroSecondary = projects[1]
-  const heroTertiary = projects[2]
-  const featured = projects.slice(0, 4)
-
   return (
     <main className="page-shell">
       <RevealObserver />
 
       <section className="home-hero">
-        <div className="section-inner home-hero-frame">
-          <p className="hero-wordmark reveal" aria-label="ERE Studio">
-            ERE
-            <span>Studio</span>
-          </p>
-
-          <div className="hero-minimal-copy reveal reveal-delay-1">
-            <p>Interior / Spatial Design</p>
-            <h1>Rooms with memory.</h1>
-          </div>
-
-          <Link
-            href={`/portfolio/${heroProject.slug}`}
-            className="hero-primary-image reveal reveal-delay-1"
-            aria-label={`View ${heroProject.title}`}
-          >
-            <Parallax amount={0.035}>
-              <ProjectMedia
-                src={heroProject.hero.src}
-                alt={heroProject.hero.alt}
-                shape="wide"
-                priority
-                sizes="(min-width: 1080px) 72vw, 100vw"
-              />
-            </Parallax>
-          </Link>
-
-          <Link
-            href={`/portfolio/${heroSecondary.slug}`}
-            className="hero-side-image hero-side-one reveal reveal-delay-2"
-            aria-label={`View ${heroSecondary.title}`}
-          >
-            <ProjectMedia
-              src={heroSecondary.hero.src}
-              alt={heroSecondary.hero.alt}
-              shape="tall"
-              sizes="(min-width: 1080px) 24vw, 70vw"
-            />
-          </Link>
-
-          <Link
-            href={`/portfolio/${heroTertiary.slug}`}
-            className="hero-side-image hero-side-two reveal reveal-delay-3"
-            aria-label={`View ${heroTertiary.title}`}
-          >
-            <ProjectMedia
-              src={heroTertiary.hero.src}
-              alt={heroTertiary.hero.alt}
-              shape="square"
-              sizes="(min-width: 1080px) 18vw, 46vw"
-            />
-          </Link>
-
-          <p className="hero-project-note reveal reveal-delay-3">
-            Paris / Toronto / Miami / Bale
-          </p>
-
-          <div className="hero-actions hero-minimal-actions reveal reveal-delay-3">
-            <Link href="/portfolio" className="btn-primary">
-              Portfolio
-            </Link>
-            <Link href="/contact" className="btn-ghost">
-              Inquire
-            </Link>
-          </div>
+        <div className="boots-hero-stage" aria-label="Midtown Hideaway pink boots hallway">
+          <Image
+            src={homeRoomImage.src}
+            alt={homeRoomImage.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="boots-hero-image"
+          />
+          <div className="boots-hero-vignette" aria-hidden="true" />
         </div>
       </section>
 
-      <section className="section-block">
-        <div className="section-inner">
-          <div className="section-heading-row">
-            <p className="section-label reveal">Selected Work / 2021-2025</p>
-            <h2 className="reveal reveal-delay-1 draw-line">
-              Four projects across four cities, each composed around a single
-              material gesture.
-            </h2>
-          </div>
+      <section className="striped-magazine-section" aria-label="ERE Studio magazine on striped fabric">
+        <Image
+          src="/projects/midtown-hideaway/final-image-home-magazine.png"
+          alt="Open ERE Studio magazine on blue and brown striped fabric."
+          width={2752}
+          height={1536}
+          sizes="100vw"
+          className="striped-magazine-image"
+        />
+        <Link href="/portfolio" className="magazine-portfolio-link striped-magazine-link">
+          See Full Portfolio
+        </Link>
+      </section>
 
-          <div className="featured-grid">
-            {featured.map((project, index) => {
-              const slot = featuredLayout[index]
-              return (
-                <Link
-                  key={project.slug}
-                  href={`/portfolio/${project.slug}`}
-                  className={`featured-item featured-link featured-item-${slot} reveal reveal-delay-${index + 1}`}
-                >
-                  <ProjectMedia
-                    src={project.hero.src}
-                    alt={project.hero.alt}
-                    shape={slot === 1 || slot === 4 ? "wide" : "tall"}
+      <section className="studio-directions-section">
+        <div className="studio-directions-heading reveal">
+          <h2>
+            One studio, 3 directions,{" "}
+            <span>endless possibilities</span>
+          </h2>
+        </div>
+        <div className="studio-directions-grid">
+          {studioDirections.map((direction, index) => (
+            <article
+              key={direction.title}
+              className={`studio-direction-card reveal reveal-delay-${index + 1}`}
+            >
+              <span className="studio-direction-number">{direction.number}</span>
+              <div className="studio-direction-content">
+                <h3>{direction.title}</h3>
+                <div className="studio-direction-image">
+                  <Image
+                    src={direction.image}
+                    alt={direction.alt}
+                    fill
+                    sizes="(min-width: 900px) 22vw, 86vw"
                   />
-                  <div>
-                    <h3>{project.title}</h3>
-                    <div className="featured-item-meta">
-                      <span>{project.year}</span>
-                      <span className="sep" aria-hidden="true">
-                        /
-                      </span>
-                      <span>{project.type}</span>
-                      <span className="sep" aria-hidden="true">
-                        /
-                      </span>
-                      <span>{project.location}</span>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
+        <Link href="/about" className="studio-learn-link">
+          Learn More About Our Studio
+        </Link>
       </section>
 
-      <section className="editorial-pull">
-        <div className="section-inner editorial-pull-grid">
-          <h2 className="reveal">
-            We work the way a museum hangs a single painting: choose the wall,
-            then live with it for a season.
+      <section className="transformation-section" aria-label="ERE Studio process">
+        <Image
+          src="/process/ere-process-desk.png"
+          alt="ERE Studio notebooks, planning sketches, pens, and iced drinks on a deep red table."
+          fill
+          sizes="100vw"
+          className="transformation-image"
+        />
+        <div className="transformation-overlay reveal" aria-hidden="true" />
+        <div className="transformation-content">
+          <h2 className="client-experience-heading reveal">
+            Client Experience
           </h2>
-          <div className="editorial-pull-body reveal reveal-delay-1">
-            <p>
-              ERE Studio composes interiors for clients who treat their spaces
-              as long projects, not transactions. The practice is small by
-              choice. We take on four to six projects a year and accompany each
-              from first walk-through through final commissioning.
-            </p>
-            <p>
-              The work tends toward limewashed plaster and warm joinery, but
-              there is no signature material. Every project begins by listening
-              to the building.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-inner">
-          <h2 className="display-callout reveal">
-            Four directions, <span className="hero-accent">one studio.</span>
-          </h2>
-          <div className="service-preview-grid stagger">
-            {services.map((service, index) => (
-              <Link
-                key={service.title}
-                href="/services"
-                className="service-card"
+          <div className="circle-block-row">
+            {transformationSteps.map((step, index) => (
+              <article
+                key={step}
+                className={`circle-step reveal reveal-delay-${index + 1}`}
               >
-                <span className="number-label">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{service.title}</h3>
-                <p>{service.copy}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block muted-section">
-        <div className="section-inner">
-          <h2 className="display-callout reveal">
-            A measured path from first walk-through to{" "}
-            <span className="hero-accent">commissioning.</span>
-          </h2>
-          <div className="process-strip stagger">
-            {processSteps.map((step, index) => (
-              <article key={step} className="process-step">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{step}</h3>
+                <span
+                  className={`circle-block circle-block-${index + 1}`}
+                  aria-hidden="true"
+                />
+                <p>
+                  <span>{index + 1}.</span> {step}
+                </p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="footer-cta">
-        <div className="section-inner footer-cta-inner reveal">
-          <p className="section-label">Start a project</p>
-          <h2>Working on a residence, a small hotel, or a hybrid space?</h2>
-          <Link href="/contact" className="btn-primary">
+      <section className="next-chapter-section">
+        <div className="next-chapter-media reveal">
+          <Image
+            src="/cta/next-chapter-book.png"
+            alt="Open book resting on denim against a burgundy bench."
+            width={1376}
+            height={768}
+            sizes="100vw"
+            className="next-chapter-image"
+          />
+          <Link href="/contact" className="next-chapter-button">
             Start a project
           </Link>
         </div>
+        <h2 className="next-chapter-title reveal reveal-delay-1">
+          Start building your home&apos;s next chapter
+        </h2>
       </section>
     </main>
   )
