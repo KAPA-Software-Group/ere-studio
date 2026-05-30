@@ -40,6 +40,10 @@ export default function Home() {
     <main className="page-shell">
       <RevealObserver />
 
+      {/* Scroll runway for the home brand reveal; collapses when JS/intro is
+          inactive so the layout is unchanged for no-JS / reduced-motion. */}
+      <div className="home-intro-spacer" data-home-intro-spacer aria-hidden="true" />
+
       <section className="home-hero">
         <div className="boots-hero-stage" aria-label="Midtown Hideaway pink boots hallway">
           <Image

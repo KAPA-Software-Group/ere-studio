@@ -4817,3 +4817,85 @@ a:hover > .project-media .project-media-image {
     padding: 30px 24px;
   }
 }
+
+/* ==========================================================================
+   Home brand reveal
+   On the landing page the wordmark loads centered on a clean veil, then
+   migrates into the header as the page is scrolled. Driven by the --reveal
+   custom property (0 = centered intro, 1 = resting header) set per frame in
+   site-header.tsx. Everything below is gated by [data-home-intro], which is
+   only present when JS is active and motion is allowed — so the no-JS /
+   reduced-motion experience is the normal header.
+   ========================================================================== */
+
+/* Wrapper that carries the scroll-driven transform; isolated from the
+   .nav-logo cell so the cell's rest geometry can be measured cleanly. */
+.nav-logo-flip {
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Scroll runway + full-screen veil are inert until the intro is activated. */
+.home-intro-spacer {
+  display: none;
+}
+
+.brand-veil {
+  display: none;
+}
+
+[data-home-intro] .home-intro-spacer {
+  display: block;
+  height: 84svh;
+}
+
+[data-home-intro] .brand-veil {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 40; /* below the header (50), above page content */
+  background: var(--paper);
+  opacity: calc(1 - var(--reveal, 1));
+  pointer-events: none;
+}
+
+/* Header fades from invisible to solid as the brand settles. */
+[data-home-intro] .site-header {
+  background: rgb(255 255 255 / calc(0.92 * var(--reveal, 1)));
+  border-bottom-color: transparent;
+}
+
+[data-home-intro] .nav-links a {
+  opacity: var(--reveal, 1);
+}
+
+/* Keep the nav out of reach (and out of the tab order) while it is hidden. */
+[data-home-intro] .site-header.nav-dormant .nav-links a {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* One-time entrance for the centered wordmark — opacity + de-blur only, so it
+   never fights the per-frame transform on the same element. */
+[data-home-intro] .nav-logo-flip {
+  animation: brand-reveal-in 1100ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes brand-reveal-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-home-intro] .nav-logo-flip {
+    animation: none;
+  }
+}
