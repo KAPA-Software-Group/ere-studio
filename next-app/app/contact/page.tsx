@@ -14,22 +14,11 @@ export default function ContactPage() {
       <RevealObserver />
 
       <section className="contact-start-section">
-        <div className="section-inner contact-start-grid">
-          <div className="contact-start-copy reveal reveal-delay-1">
-            <h1>
-              <span>Want to</span>
-              <span>
-                <em>start</em>
-              </span>
-              <span>
-                <em>a</em> new
-              </span>
-              <span>project?</span>
-            </h1>
-          </div>
-          <div className="contact-start-form reveal">
-            <ContactForm />
-          </div>
+        <div className="contact-start-heading reveal">
+          <h1>Start a Project</h1>
+        </div>
+        <div className="contact-start-form reveal">
+          <ContactForm />
         </div>
       </section>
     </main>

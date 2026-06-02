@@ -25,8 +25,8 @@
   --stone: #f5efef;
   --stone-light: #faf6f6;
   --charcoal: #1a1a1a;
-  --burgundy: #5a1a2b;
-  --burgundy-deep: #3d111d;
+  --burgundy: #6f2d22;
+  --burgundy-deep: #531c13;
   --burgundy-wash: #f5efef;
   --muted: #6e6562;
   --line: rgba(90, 26, 43, 0.16);
@@ -2628,7 +2628,7 @@ a:hover > .project-media .project-media-image {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 18px clamp(22px, 3.2vw, 56px) 12px;
+  padding: 8px clamp(22px, 3.2vw, 56px) 7px;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -2637,7 +2637,7 @@ a:hover > .project-media .project-media-image {
   grid-template-columns:
     minmax(80px, 1fr)
     minmax(92px, 1fr)
-    minmax(230px, auto)
+    minmax(140px, auto)
     minmax(106px, 1fr)
     minmax(128px, 1fr);
   column-gap: clamp(18px, 3.4vw, 74px);
@@ -2655,7 +2655,7 @@ a:hover > .project-media .project-media-image {
 }
 
 .nav-logo-image {
-  width: clamp(220px, 22vw, 420px);
+  width: clamp(118px, 11vw, 200px);
 }
 
 .nav-links {
@@ -2751,7 +2751,7 @@ a:hover > .project-media .project-media-image {
     serif;
   font-size: clamp(1.04rem, 1.62vw, 1.72rem);
   font-weight: 400;
-  transform: translateY(12px);
+  transform: translateY(2px);
 }
 
 .home-hero-frame {
@@ -2781,7 +2781,7 @@ a:hover > .project-media .project-media-image {
 
 /* Opening portfolio book hero */
 .home-hero {
-  min-height: calc(100svh - 92px);
+  min-height: calc(100svh - 60px);
   padding: 0;
   background: #ebe8de;
 }
@@ -2789,7 +2789,7 @@ a:hover > .project-media .project-media-image {
 .book-hero-stage {
   position: relative;
   width: 100%;
-  min-height: calc(100svh - 92px);
+  min-height: calc(100svh - 60px);
   overflow: hidden;
   background:
     radial-gradient(circle at 52% 78%, rgba(255, 249, 238, 0.24), transparent 28%),
@@ -3124,7 +3124,7 @@ a:hover > .project-media .project-media-image {
 
 /* Pink boots hero: start close, reveal the full hallway */
 .home-hero {
-  min-height: calc(100svh - 92px);
+  min-height: calc(100svh - 60px);
   padding: 0;
   background: #6f2d22;
 }
@@ -3132,7 +3132,7 @@ a:hover > .project-media .project-media-image {
 .boots-hero-stage {
   position: relative;
   width: 100%;
-  min-height: calc(100svh - 92px);
+  min-height: calc(100svh - 60px);
   overflow: hidden;
   background: #6f2d22;
   isolation: isolate;
@@ -3211,6 +3211,24 @@ a:hover > .project-media .project-media-image {
 
   .boots-hero-vignette {
     opacity: 0.3;
+  }
+}
+
+/* Home hero slideshow: crossfade between stacked images */
+.hero-slideshow .hero-slide {
+  opacity: 0;
+  animation: none;
+  object-position: center;
+  transition: opacity 1200ms ease;
+}
+
+.hero-slideshow .hero-slide[data-active="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slideshow .hero-slide {
+    transition: none;
   }
 }
 
@@ -4239,7 +4257,7 @@ a:hover > .project-media .project-media-image {
 }
 
 .about-studio-hero {
-  padding: clamp(88px, 10vw, 154px) var(--page-gutter) clamp(24px, 3vw, 42px);
+  padding: clamp(60px, 7vw, 96px) var(--page-gutter) clamp(8px, 1.5vw, 18px);
   background: #f7f5f0;
 }
 
@@ -4270,13 +4288,13 @@ a:hover > .project-media .project-media-image {
 }
 
 .about-studio-subtitle {
-  max-width: 440px;
+  max-width: 520px;
   margin: clamp(18px, 2.4vw, 32px) 0 0;
   color: #5a453d;
   font-family: var(--font-sans);
-  font-size: clamp(1rem, 1.4vw, 1.3rem);
+  font-size: clamp(1.1rem, 1.9vw, 1.6rem);
   font-weight: 500;
-  line-height: 1.38;
+  line-height: 1.3;
 }
 
 .about-studio-image-wrap {
@@ -4293,21 +4311,21 @@ a:hover > .project-media .project-media-image {
 }
 
 .about-studio-note {
-  padding: clamp(10px, 2vw, 24px) var(--page-gutter) clamp(88px, 10vw, 148px);
+  padding: 0 var(--page-gutter) clamp(88px, 10vw, 148px);
   background: #f7f5f0;
 }
 
 .about-studio-note-copy {
   position: relative;
   display: grid;
-  max-width: 860px;
+  max-width: none;
   gap: 1rem;
-  margin: 0 auto;
-  padding: clamp(58px, 6vw, 86px);
+  margin: 0;
+  padding: clamp(8px, 1.4vw, 18px) 0 clamp(20px, 3vw, 40px);
   color: #2b221d;
   font-family: var(--font-sans);
-  font-size: clamp(1.02rem, 1.22vw, 1.2rem);
-  line-height: 1.72;
+  font-size: clamp(1.2rem, 1.7vw, 1.6rem);
+  line-height: 1.6;
 }
 
 .about-studio-note-copy::before,
@@ -4338,13 +4356,9 @@ a:hover > .project-media .project-media-image {
   margin: 0;
 }
 
-.about-spaces {
-  max-width: 980px;
-  margin: clamp(54px, 8vw, 112px) auto 0;
-}
-
-.about-spaces h2 {
-  margin: 0 0 clamp(34px, 5vw, 66px);
+.about-philosophy-heading {
+  max-width: none;
+  margin: clamp(6px, 1.2vw, 16px) 0 clamp(14px, 1.8vw, 22px);
   color: #211917;
   font-family:
     "Black Mango",
@@ -4353,9 +4367,36 @@ a:hover > .project-media .project-media-image {
     "Cormorant Garamond",
     Georgia,
     serif;
-  font-size: clamp(3.4rem, 9vw, 9.2rem);
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
   font-weight: 400;
-  line-height: 0.84;
+  line-height: 1;
+}
+
+/* Keep the " + " in service titles visible regardless of display font. */
+.title-plus {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-weight: 400;
+  color: #6f2d22;
+}
+
+.about-spaces {
+  max-width: none;
+  margin: clamp(16px, 2.4vw, 38px) 0 0;
+}
+
+.about-spaces h2 {
+  margin: 0 0 clamp(22px, 3vw, 40px);
+  color: #211917;
+  font-family:
+    "Black Mango",
+    Baskerville,
+    "Libre Baskerville",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1;
 }
 
 .about-spaces-list {
@@ -4368,18 +4409,42 @@ a:hover > .project-media .project-media-image {
 }
 
 .about-space-item summary {
-  display: grid;
+  position: relative;
+  display: flex;
   align-items: baseline;
-  gap: clamp(18px, 4vw, 48px);
-  padding: clamp(22px, 3vw, 36px) 0;
+  gap: clamp(10px, 1.4vw, 16px);
+  padding: clamp(18px, 2.4vw, 28px) clamp(42px, 5vw, 60px) clamp(18px, 2.4vw, 28px) 0;
   color: #681f23;
   cursor: pointer;
-  grid-template-columns: minmax(48px, 0.14fr) minmax(0, 1fr);
+  border-radius: 8px;
   list-style: none;
+  transition: background 200ms ease;
+}
+
+.about-space-item summary:hover {
+  background: rgba(111, 45, 34, 0.12);
 }
 
 .about-space-item summary::-webkit-details-marker {
   display: none;
+}
+
+/* Expand arrow beside each title; rotates when the item is open. */
+.about-space-item summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: clamp(16px, 2.4vw, 26px);
+  width: 11px;
+  height: 11px;
+  border-right: 2px solid #6f2d22;
+  border-bottom: 2px solid #6f2d22;
+  transform: translateY(-65%) rotate(45deg);
+  transition: transform 220ms ease;
+}
+
+.about-space-item[open] summary::after {
+  transform: translateY(-35%) rotate(-135deg);
 }
 
 .about-space-item summary span {
@@ -4388,24 +4453,25 @@ a:hover > .project-media .project-media-image {
     Baskerville,
     Georgia,
     serif;
-  font-size: clamp(2.2rem, 4.6vw, 5rem);
-  line-height: 0.9;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  line-height: 1.1;
+  opacity: 0.7;
 }
 
 .about-space-item summary strong {
   font-family: var(--font-sans);
-  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-size: clamp(1.32rem, 1.9vw, 1.74rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.1;
 }
 
 .about-space-item p {
-  max-width: 760px;
-  margin: 0 0 clamp(26px, 3vw, 42px) clamp(66px, 14vw, 160px);
+  max-width: 880px;
+  margin: 0 0 clamp(26px, 3vw, 42px) clamp(26px, 4vw, 48px);
   color: #342925;
   font-family: var(--font-sans);
-  font-size: clamp(0.98rem, 1.12vw, 1.12rem);
-  line-height: 1.65;
+  font-size: clamp(1.18rem, 1.6vw, 1.5rem);
+  line-height: 1.6;
 }
 
 .contact-start-page {
@@ -4413,32 +4479,65 @@ a:hover > .project-media .project-media-image {
 }
 
 .contact-start-section {
-  min-height: calc(100svh - 92px);
+  min-height: calc(100svh - 60px);
   padding: clamp(26px, 4vw, 58px) var(--page-gutter) clamp(68px, 8vw, 116px);
   background: #e5edf0;
 }
 
-.contact-start-grid {
-  display: grid;
-  align-items: start;
-  gap: clamp(42px, 7vw, 92px);
-  grid-template-columns: minmax(320px, 0.48fr) minmax(0, 0.52fr);
+.contact-start-form {
+  width: 100%;
 }
 
 .contact-start-form .contact-form {
-  grid-template-columns: 1fr;
-  background: #4b202b;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: clamp(26px, 4vw, 56px);
+  background: #602a2e;
   border-color: rgba(255, 255, 255, 0.18);
 }
 
+.contact-start-form .form-field-wide {
+  grid-column: 1 / -1;
+}
+
 .contact-start-form .form-field-full {
-  grid-column: 1;
+  grid-column: 1 / -1;
+}
+
+.contact-start-heading {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto clamp(22px, 3vw, 42px);
+}
+
+.contact-start-heading h1 {
+  margin: 0;
+  color: #000;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 500;
+  line-height: 1;
 }
 
 .contact-start-form .form-field span,
 .contact-start-form .form-field small,
 .contact-start-form .form-submit-row p {
-  color: rgba(255, 248, 239, 0.78);
+  color: rgba(255, 248, 239, 0.86);
+}
+
+.contact-start-form .form-field span {
+  font-size: 1.04rem;
+}
+
+.contact-start-form .form-field small {
+  font-size: 0.88rem;
+}
+
+.contact-start-form .form-field input,
+.contact-start-form .form-field textarea,
+.contact-start-form .form-field select {
+  font-size: 1.06rem;
 }
 
 .contact-start-form .form-field strong {
@@ -4446,15 +4545,75 @@ a:hover > .project-media .project-media-image {
 }
 
 .contact-start-form .form-field input,
-.contact-start-form .form-field textarea {
+.contact-start-form .form-field textarea,
+.contact-start-form .form-field select {
   border-color: rgba(255, 248, 239, 0.26);
   background: rgba(255, 248, 239, 0.92);
 }
 
 .contact-start-form .form-field input:focus,
-.contact-start-form .form-field textarea:focus {
+.contact-start-form .form-field textarea:focus,
+.contact-start-form .form-field select:focus {
   border-color: #fff8ef;
   background: #fff8ef;
+}
+
+/* Keep wrapper divs transparent so the burgundy form card reads cleanly
+   over the white-canvas override. */
+.contact-start-form,
+.contact-start-form .form-submit-row,
+.contact-start-form .form-field-full {
+  background-color: transparent !important;
+}
+
+/* Select + file inputs share the text-input look. */
+.form-field select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--charcoal);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-field .form-file {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 248, 239, 0.92);
+  color: #000;
+  cursor: pointer;
+}
+
+.contact-start-form .form-field .form-file {
+  color: #000;
+}
+
+/* Beige "Send inquiry" submit button on the contact form */
+.contact-start-form .form-submit {
+  background: #e7decb !important;
+  color: #2b1a1f !important;
+  border-color: #e7decb !important;
+}
+
+.contact-start-form .form-submit:hover:not(:disabled) {
+  background: #d8cbb0 !important;
+}
+
+/* Native "Choose files" button text/colour */
+.form-field .form-file::file-selector-button {
+  margin-right: 12px;
+  padding: 7px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  background: #ffffff;
+  color: #000;
+  font: inherit;
+  cursor: pointer;
 }
 
 .contact-start-copy {
@@ -4516,28 +4675,23 @@ a:hover > .project-media .project-media-image {
 }
 
 .portfolio-editorial-hero {
-  padding: clamp(94px, 12vw, 172px) var(--page-gutter) clamp(38px, 5vw, 76px);
+  padding: clamp(78px, 9vw, 120px) var(--page-gutter) clamp(8px, 1.6vw, 20px);
 }
 
 .portfolio-editorial-hero h1 {
-  display: inline-block;
-  max-width: 10ch;
+  display: block;
+  max-width: none;
   margin: 0;
-  padding: clamp(18px, 3vw, 44px) clamp(20px, 4vw, 56px);
-  color: #f3eee2;
-  background: rgba(206, 205, 197, 0.2);
-  border: 1px solid rgba(247, 245, 240, 0.16);
-  backdrop-filter: blur(6px);
-  font-family:
-    "Black Mango",
-    Baskerville,
-    "Libre Baskerville",
-    "Cormorant Garamond",
-    Georgia,
-    serif;
-  font-size: clamp(4.8rem, 14vw, 15rem);
-  font-weight: 400;
-  line-height: 0.78;
+  padding: 0;
+  color: #000 !important;
+  background: transparent !important;
+  border: 0;
+  backdrop-filter: none;
+  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .portfolio-editorial-section {
@@ -4787,7 +4941,16 @@ a:hover > .project-media .project-media-image {
   }
 
   .portfolio-editorial-hero h1 {
-    font-size: clamp(4rem, 22vw, 7.4rem);
+    font-size: clamp(0.92rem, 4vw, 1.2rem);
+  }
+
+  .contact-start-form .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .magazine-book {
+    width: 96vw;
+    aspect-ratio: 1 / 1;
   }
 
   .portfolio-editorial-pair,
@@ -4899,3 +5062,421 @@ a:hover > .project-media .project-media-image {
     animation: none;
   }
 }
+
+/* ==========================================================================
+   White-canvas override
+   Forces every surface to a plain white background and strips all CSS
+   background images (gradients, textures, corner art) site-wide.
+   Interactive controls (links, buttons, inputs) are left intact so the
+   header/nav and any actions stay usable. The hero photograph is a
+   foreground <img>, not a CSS background, so it is unaffected.
+   ========================================================================== */
+html,
+body,
+.page-shell,
+main,
+section,
+header,
+footer,
+article,
+aside,
+nav,
+figure,
+ul,
+ol,
+li,
+div {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Strip decorative pseudo-element background art / gradients */
+*::before,
+*::after {
+  background-image: none !important;
+}
+
+/* ==========================================================================
+   Global typeface override
+   Self-hosted "Awesome Serif" applied to every text element site-wide.
+   The "ERE Studio" wordmark in the header is an image, not text, so it is
+   unaffected and keeps its original lettering.
+   ========================================================================== */
+@font-face {
+  font-family: "Awesome Serif";
+  src: url("/fonts/awesome-serif.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  font-family: "Awesome Serif", Georgia, "Times New Roman", serif !important;
+}
+
+/* The ERE Studio wordmark typeface, for headings that should match the logo.
+   Drop the brand font at /fonts/ere-wordmark.otf and it applies automatically;
+   until then these headings fall back to the body serif. */
+@font-face {
+  font-family: "ERE Wordmark";
+  src: url("/fonts/ere-wordmark.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.brand-wordmark {
+  font-family: "ERE Wordmark", "Awesome Serif", Georgia, serif !important;
+}
+
+/* Bold display face for the "Start a Project" buttons. */
+@font-face {
+  font-family: "Awesome Serif Bold";
+  src: url("/fonts/awesome-serif-bold.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Portfolio page: burgundy canvas + animated flip-through magazine
+   These override the global white-canvas rule for the portfolio route only.
+   ========================================================================== */
+main.portfolio-page,
+main.portfolio-page .portfolio-editorial-hero,
+main.portfolio-page .portfolio-editorial-section {
+  background-color: #602a2e !important;
+  background-image: none !important;
+}
+
+main.portfolio-page .magazine,
+main.portfolio-page .magazine-book,
+main.portfolio-page .magazine-controls,
+main.portfolio-page .mag-leaf,
+main.portfolio-page .mag-face,
+main.portfolio-page .mag-photo,
+main.portfolio-page .mag-text {
+  background-color: transparent !important;
+}
+
+.magazine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 3vw, 36px);
+  padding: clamp(16px, 3vw, 44px) 0 clamp(40px, 6vw, 80px);
+}
+
+/* Open two-page spread, centred. Left half is a static page; the leaves
+   on the right half turn over the spine to reveal the next project. */
+.magazine-book {
+  position: relative;
+  width: min(940px, 94vw);
+  aspect-ratio: 3 / 2;
+  margin: 0 auto;
+  perspective: 2400px;
+  perspective-origin: 50% 38%;
+  filter: drop-shadow(0 48px 70px rgba(8, 2, 4, 0.6));
+}
+
+.mag-base-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.mag-leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 1000ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.mag-leaf[data-flipped="true"] {
+  transform: rotateY(-180deg);
+}
+
+.mag-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.mag-face-back {
+  transform: rotateY(180deg);
+}
+
+.mag-base-left,
+.mag-leftpage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px 2px 2px 10px;
+  box-shadow:
+    -3px 0 0 #ded2bb,
+    -6px 0 0 #d3c5a9,
+    -9px 0 0 #c7b698,
+    -12px 0 0 #bca98a,
+    inset -22px 0 30px -22px rgba(20, 6, 10, 0.55);
+}
+
+main.portfolio-page .mag-base-left,
+main.portfolio-page .mag-leftpage {
+  background-color: #efe6d6 !important;
+}
+
+.mag-base-left img,
+.mag-leftpage img {
+  object-fit: cover;
+}
+
+.mag-rightpage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px 10px 10px 2px;
+  box-shadow:
+    3px 0 0 #ded2bb,
+    6px 0 0 #d3c5a9,
+    9px 0 0 #c7b698,
+    12px 0 0 #bca98a,
+    inset 22px 0 30px -22px rgba(20, 6, 10, 0.4);
+}
+
+main.portfolio-page .mag-rightpage {
+  background-color: #fbf7ef !important;
+}
+
+.mag-photo {
+  position: relative;
+  width: 100%;
+  height: 54%;
+  flex: none;
+}
+
+.mag-photo img {
+  object-fit: cover;
+}
+
+.mag-text {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: clamp(6px, 1vw, 11px);
+  padding: clamp(14px, 2.2vw, 26px) clamp(16px, 2.4vw, 28px) clamp(28px, 3vw, 40px);
+  color: #2b1a1f;
+}
+
+.mag-meta {
+  margin: 0;
+  color: #8a5a45;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mag-text h3 {
+  margin: 0;
+  color: #6f2d22;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.02;
+}
+
+.mag-intro {
+  margin: 0;
+  font-size: clamp(0.86rem, 1.2vw, 1rem);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mag-link {
+  margin-top: auto;
+  color: #6f2d22;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(111, 45, 34, 0.4);
+  align-self: flex-start;
+  padding-bottom: 2px;
+}
+
+.mag-folio {
+  position: absolute;
+  right: clamp(16px, 2.4vw, 28px);
+  bottom: clamp(12px, 1.8vw, 20px);
+  color: rgba(111, 45, 34, 0.5);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+}
+
+.mag-endpage {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+main.portfolio-page .mag-endpage {
+  background-color: #efe6d6 !important;
+}
+
+.mag-endpage span {
+  color: rgba(111, 45, 34, 0.4);
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.magazine-controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  color: #f3eee2;
+}
+
+.magazine-controls button {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(243, 238, 226, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: #f3eee2;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.magazine-controls button:hover {
+  background: rgba(243, 238, 226, 0.14);
+  border-color: #f3eee2;
+}
+
+.magazine-controls span {
+  min-width: 56px;
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mag-leaf {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   "Start a Project" button (home + about) and header hover hue
+   ========================================================================== */
+.start-project-cta {
+  display: flex;
+  justify-content: center;
+  padding: clamp(34px, 5vw, 70px) var(--page-gutter);
+}
+
+.about-cta {
+  padding-top: clamp(40px, 6vw, 80px);
+}
+
+.start-project-button {
+  display: inline-block;
+  padding: 21px 56px;
+  color: #000;
+  font-family: "Awesome Serif Bold", "Awesome Serif", Georgia, serif !important;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 2px;
+  transition:
+    background 200ms ease,
+    color 200ms ease;
+}
+
+.start-project-button:hover {
+  color: #fff;
+  background: #6f2d22;
+  border-color: #6f2d22;
+}
+
+/* Pink hover hue around header nav titles */
+.site-header .nav-links a {
+  padding: 6px 16px;
+  border-radius: 999px;
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.site-header .nav-links a:hover {
+  color: #6f2d22;
+  background: rgba(111, 45, 34, 0.18);
+  box-shadow: 0 0 0 5px rgba(111, 45, 34, 0.12);
+}
+
+/* ==========================================================================
+   Portfolio: centre the open magazine + larger title on a pink panel
+   ========================================================================== */
+.portfolio-editorial-hero {
+  text-align: left;
+}
+
+.portfolio-editorial-hero h1 {
+  display: inline-block;
+  padding: 0 !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  border-radius: 0;
+  font-size: clamp(2.6rem, 6.4vw, 5.4rem) !important;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.04;
+}
+
+.portfolio-editorial-section {
+  display: flex;
+  justify-content: center;
+}
+
+.magazine {
+  margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .portfolio-editorial-hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+  }
+}
+

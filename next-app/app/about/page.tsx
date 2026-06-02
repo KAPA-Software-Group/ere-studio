@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
+import Link from "next/link"
 import { RevealObserver } from "@/components/reveal-observer"
 
 const shapedSpaces = [
@@ -29,6 +30,16 @@ export const metadata: Metadata = {
     "About ERE Studio, a small interior and spatial design practice working across residences, hospitality, renovation, and hybrid spaces.",
 }
 
+function renderTitle(title: string) {
+  const parts = title.split(" + ")
+  return parts.map((part, index) => (
+    <span key={part}>
+      {part}
+      {index < parts.length - 1 && <span className="title-plus"> + </span>}
+    </span>
+  ))
+}
+
 export default function AboutPage() {
   return (
     <main className="page-shell">
@@ -37,7 +48,7 @@ export default function AboutPage() {
       <section className="about-studio-hero">
         <div className="section-inner about-studio-grid">
           <div className="about-studio-copy reveal">
-            <h1>About the studio</h1>
+            <h1 className="brand-wordmark">About the studio</h1>
             <p className="about-studio-subtitle">
               Elevated interiors, grounded in the way you live.
             </p>
@@ -58,6 +69,7 @@ export default function AboutPage() {
 
       <section className="about-studio-note">
         <div className="section-inner">
+          <h2 className="about-philosophy-heading reveal">Our Philosophy</h2>
           <div className="about-studio-note-copy reveal">
             <p>
               Our studio takes on only a select number of projects each year,
@@ -79,12 +91,18 @@ export default function AboutPage() {
                 <details key={space.number} className="about-space-item">
                   <summary>
                     <span>{space.number}</span>
-                    <strong>{space.title}</strong>
+                    <strong>{renderTitle(space.title)}</strong>
                   </summary>
                   <p>{space.description}</p>
                 </details>
               ))}
             </div>
+          </div>
+
+          <div className="start-project-cta about-cta">
+            <Link href="/contact" className="start-project-button">
+              Start a Project
+            </Link>
           </div>
         </div>
       </section>

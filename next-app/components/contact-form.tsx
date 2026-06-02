@@ -2,18 +2,31 @@
 
 import { useMemo, useState, type FormEvent } from "react"
 
-type FieldName = "name" | "email" | "message"
+type FieldName =
+  | "name"
+  | "email"
+  | "phone"
+  | "budget"
+  | "timeline"
+  | "projectType"
+  | "location"
 
-type FieldConfig = {
+type BaseField = {
   label: string
   name: FieldName
-  type?: string
   helper: string
   required?: boolean
+  full?: boolean
 }
 
-const fields: FieldConfig[] = [
+type InputField = BaseField & { kind: "input"; type: string }
+type SelectField = BaseField & { kind: "select"; options: string[] }
+
+type Field = InputField | SelectField
+
+const fields: Field[] = [
   {
+    kind: "input",
     label: "Name",
     name: "name",
     type: "text",
@@ -21,27 +34,83 @@ const fields: FieldConfig[] = [
     required: true,
   },
   {
+    kind: "input",
     label: "Email",
     name: "email",
     type: "email",
     helper: "Where we can reach you.",
     required: true,
   },
+  {
+    kind: "input",
+    label: "Phone number",
+    name: "phone",
+    type: "tel",
+    helper: "Optional, if you prefer a call.",
+  },
+  {
+    kind: "select",
+    label: "Budget",
+    name: "budget",
+    helper: "An approximate range is fine.",
+    options: [
+      "Under $25k",
+      "$25k – $50k",
+      "$50k – $100k",
+      "$100k – $250k",
+      "$250k +",
+    ],
+  },
+  {
+    kind: "select",
+    label: "Timeline",
+    name: "timeline",
+    helper: "When you would like to begin.",
+    options: [
+      "Flexible",
+      "Within 1–3 months",
+      "Within 3–6 months",
+      "Within 6–12 months",
+      "12+ months out",
+    ],
+  },
+  {
+    kind: "select",
+    label: "Project type",
+    name: "projectType",
+    helper: "What you are planning.",
+    options: [
+      "Residential",
+      "Hospitality",
+      "Renovation + Restoration",
+      "Hybrid Space",
+      "Other",
+    ],
+  },
+  {
+    kind: "input",
+    label: "Project location",
+    name: "location",
+    type: "text",
+    helper: "City, region, or country.",
+    full: true,
+  },
 ]
 
 const initialValues: Record<FieldName, string> = {
   name: "",
   email: "",
-  message: "",
+  phone: "",
+  budget: "",
+  timeline: "",
+  projectType: "",
+  location: "",
 }
 
 function validate(values: Record<FieldName, string>) {
   const nextErrors: Partial<Record<FieldName, string>> = {}
 
   if (!values.name.trim()) nextErrors.name = "Add a contact name."
-  if (!values.message.trim()) {
-    nextErrors.message = "Add a short message."
-  }
 
   const email = values.email.trim()
   if (!email) {
@@ -55,6 +124,7 @@ function validate(values: Record<FieldName, string>) {
 
 export function ContactForm() {
   const [values, setValues] = useState(initialValues)
+  const [files, setFiles] = useState<string[]>([])
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
   const [status, setStatus] = useState<"idle" | "sending" | "ready">("idle")
 
@@ -62,13 +132,23 @@ export function ContactForm() {
     const lines = [
       `Name: ${values.name}`,
       `Email: ${values.email}`,
+      `Phone number: ${values.phone}`,
+      `Budget: ${values.budget}`,
+      `Timeline: ${values.timeline}`,
+      `Project type: ${values.projectType}`,
+      `Project location: ${values.location}`,
       "",
-      "Message:",
-      values.message,
+      `Inspiration files: ${files.length ? files.join(", ") : "none attached"}`,
     ]
-
     return lines.join("\n")
-  }, [values])
+  }, [values, files])
+
+  const update = (name: FieldName, value: string) => {
+    setValues((current) => ({ ...current, [name]: value }))
+    if (errors[name]) {
+      setErrors((current) => ({ ...current, [name]: undefined }))
+    }
+  }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -93,26 +173,39 @@ export function ContactForm() {
   return (
     <form className="contact-form" onSubmit={onSubmit} noValidate>
       {fields.map((field) => (
-        <label key={field.name} className="form-field">
+        <label
+          key={field.name}
+          className={`form-field${field.full ? " form-field-wide" : ""}`}
+        >
           <span>{field.label}</span>
-          <input
-            name={field.name}
-            type={field.type ?? "text"}
-            value={values[field.name]}
-            aria-invalid={Boolean(errors[field.name])}
-            aria-describedby={`${field.name}-helper ${field.name}-error`}
-            required={field.required}
-            onChange={(event) => {
-              const value = event.target.value
-              setValues((current) => ({ ...current, [field.name]: value }))
-              if (errors[field.name]) {
-                setErrors((current) => ({
-                  ...current,
-                  [field.name]: undefined,
-                }))
-              }
-            }}
-          />
+
+          {field.kind === "select" ? (
+            <select
+              name={field.name}
+              value={values[field.name]}
+              aria-invalid={Boolean(errors[field.name])}
+              aria-describedby={`${field.name}-helper ${field.name}-error`}
+              onChange={(event) => update(field.name, event.target.value)}
+            >
+              <option value="">Select…</option>
+              {field.options.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              name={field.name}
+              type={field.type}
+              value={values[field.name]}
+              aria-invalid={Boolean(errors[field.name])}
+              aria-describedby={`${field.name}-helper ${field.name}-error`}
+              required={field.required}
+              onChange={(event) => update(field.name, event.target.value)}
+            />
+          )}
+
           <small id={`${field.name}-helper`}>{field.helper}</small>
           <strong id={`${field.name}-error`} role="alert">
             {errors[field.name] ?? ""}
@@ -120,29 +213,24 @@ export function ContactForm() {
         </label>
       ))}
 
-      <label className="form-field form-field-full">
-        <span>Message</span>
-        <textarea
-          name="message"
-          rows={8}
-          value={values.message}
-          aria-invalid={Boolean(errors.message)}
-          aria-describedby="message-helper message-error"
-          required
-          onChange={(event) => {
-            setValues((current) => ({
-              ...current,
-              message: event.target.value,
-            }))
-            if (errors.message) {
-              setErrors((current) => ({ ...current, message: undefined }))
-            }
-          }}
+      <label className="form-field form-field-wide">
+        <span>Inspiration upload</span>
+        <input
+          type="file"
+          name="inspiration"
+          accept="image/*,.pdf"
+          multiple
+          className="form-file"
+          onChange={(event) =>
+            setFiles(Array.from(event.target.files ?? []).map((f) => f.name))
+          }
         />
-        <small id="message-helper">Tell us a little about the project.</small>
-        <strong id="message-error" role="alert">
-          {errors.message ?? ""}
-        </strong>
+        <small id="inspiration-helper">
+          {files.length
+            ? `Selected: ${files.join(", ")}`
+            : "Images or PDFs that capture the look you are after."}
+        </small>
+        <strong />
       </label>
 
       <div className="form-submit-row">
@@ -155,7 +243,7 @@ export function ContactForm() {
         </button>
         <p aria-live="polite">
           {status === "ready"
-            ? "Your email client is opening with the inquiry draft."
+            ? "Your email client is opening with the inquiry draft. Attach your inspiration files there."
             : "Typical response window: two business days."}
         </p>
       </div>
