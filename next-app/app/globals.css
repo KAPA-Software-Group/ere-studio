@@ -1516,12 +1516,17 @@ a:hover > .project-media .project-media-image {
 
 /* Project detail: dense meta + cinematic gallery */
 .project-hero {
-  padding-block: clamp(24px, 3.5vw, 52px) clamp(28px, 4vw, 56px);
+  padding-block: clamp(10px, 1.8vw, 24px) clamp(28px, 4vw, 56px);
 }
 
 .project-hero-grid {
-  grid-template-columns: minmax(0, 0.42fr) minmax(360px, 0.58fr);
-  gap: clamp(40px, 5vw, 72px);
+  /* Fluid fractions (no fixed px minimum) so the two columns scale together
+     with the window instead of the image crushing the text column. */
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  gap: clamp(28px, 4vw, 72px);
+  /* Align the copy to the top of the tall image (was bottom-aligned, which
+     pushed the title down). */
+  align-items: start;
 }
 
 .page-title {
@@ -1674,7 +1679,10 @@ a:hover > .project-media .project-media-image {
 }
 
 .pullquote {
-  padding-block: clamp(96px, 12vw, 184px);
+  /* The burgundy block is flattened to white by the global white-canvas
+     override, so the original large padding read as a big empty band before
+     the footer. Tightened to sit as a clean quote. */
+  padding-block: clamp(36px, 5vw, 72px);
   background: var(--burgundy);
   color: var(--paper);
   position: relative;
@@ -5054,6 +5062,60 @@ a:hover > .project-media .project-media-image {
    reduced-motion experience is the normal header.
    ========================================================================== */
 
+/* ==========================================================================
+   Project detail: "See our other projects" button overlaid on the hero image
+   ========================================================================== */
+.project-hero-media {
+  position: relative;
+}
+
+.project-others-button {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 3vw, 28px);
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(20, 18, 16, 0.55) !important;
+  backdrop-filter: blur(8px);
+  color: #fff !important;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    background 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-others-button:hover {
+    background: rgba(20, 18, 16, 0.72) !important;
+  }
+}
+
+.project-others-button:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+/* The hero stays a fluid two-column layout that scales with the window, and
+   only stacks to a single column on phones. (This rule is later in the file
+   than the unconditional two-column rule, so it wins on source order.) */
+@media (max-width: 760px) {
+  .project-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-hero-media {
+    max-width: 620px;
+  }
+}
+
 /* Wrapper that carries the scroll-driven transform; isolated from the
    .nav-logo cell so the cell's rest geometry can be measured cleanly. */
 .nav-logo-flip {
@@ -5105,14 +5167,33 @@ a:hover > .project-media .project-media-image {
   background-color: rgba(250, 248, 244, 0.5) !important;
 }
 
-/* Header fades from invisible to solid as the brand settles. */
+/* The header chrome (bar background + nav links) stays fully invisible while
+   the wordmark migrates, so the intro reads as a single clean motion with no
+   header showing through. Once the brand has settled (nav-dormant cleared at
+   the end of the scroll runway) the chrome transitions in. !important beats the
+   white-canvas `header { background:#fff !important }` rule further down. */
 [data-home-intro] .site-header {
-  background: rgb(255 255 255 / calc(0.92 * var(--reveal, 1)));
-  border-bottom-color: transparent;
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  /* No backdrop blur during the intro, otherwise the header blurs a strip of
+     the veil image at the top and breaks the seamless look. */
+  backdrop-filter: none !important;
+  transition: background 320ms cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 320ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-home-intro] .site-header:not(.nav-dormant) {
+  background: rgb(255 255 255 / 0.92) !important;
+  backdrop-filter: blur(18px) !important;
 }
 
 [data-home-intro] .nav-links a {
-  opacity: var(--reveal, 1);
+  opacity: 0;
+  transition: opacity 320ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-home-intro] .site-header:not(.nav-dormant) .nav-links a {
+  opacity: 1;
 }
 
 /* Keep the nav out of reach (and out of the tab order) while it is hidden. */
@@ -5121,9 +5202,16 @@ a:hover > .project-media .project-media-image {
   pointer-events: none;
 }
 
-/* One-time entrance for the centered wordmark — opacity + de-blur only, so it
-   never fights the per-frame transform on the same element. */
+/* Hold the wordmark invisible until JS has positioned it at center, so it can
+   never paint in its resting header slot and then snap to the middle. */
 [data-home-intro] .nav-logo-flip {
+  opacity: 0;
+}
+
+/* One-time entrance for the centered wordmark — opacity + de-blur only, so it
+   never fights the per-frame transform on the same element. Runs only once the
+   first positioning pass has set data-brand-ready. */
+[data-home-intro][data-brand-ready] .nav-logo-flip {
   animation: brand-reveal-in 1100ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 

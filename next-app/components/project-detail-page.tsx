@@ -3,7 +3,7 @@ import { ProjectGallery } from "@/components/project-gallery"
 import { ProjectMedia } from "@/components/ui/project-media"
 import { Parallax } from "@/components/parallax"
 import { RevealObserver } from "@/components/reveal-observer"
-import { getAdjacentProject, type Project } from "@/lib/projects"
+import { type Project } from "@/lib/projects"
 
 type ProjectDetailPageProps = {
   project: Project
@@ -32,8 +32,6 @@ const detailImages: Record<string, string[]> = {
 }
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
-  const next = getAdjacentProject(project.slug)
-
   const custom = detailImages[project.slug]
   const heroSrc = custom?.[0] ?? project.hero.src
   const gallery = custom
@@ -42,7 +40,6 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
         alt: `${project.title}, image ${i + 2}`,
       }))
     : project.gallery
-  const nextHeroSrc = detailImages[next.slug]?.[0] ?? next.hero.src
 
   return (
     <main className="page-shell">
@@ -51,9 +48,6 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       <section className="project-hero">
         <div className="section-inner project-hero-grid">
           <div className="project-hero-copy">
-            <Link href="/portfolio" className="text-link">
-              Selected work
-            </Link>
             <p className="section-label reveal">
               {project.type} / {project.year}
             </p>
@@ -84,13 +78,18 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
           </div>
           <div className="reveal reveal-delay-2">
             <Parallax amount={0.05}>
-              <ProjectMedia
-                src={heroSrc}
-                alt={project.hero.alt}
-                shape="tall"
-                priority
-                sizes="(min-width: 1080px) 56vw, 100vw"
-              />
+              <div className="project-hero-media">
+                <ProjectMedia
+                  src={heroSrc}
+                  alt={project.hero.alt}
+                  shape="tall"
+                  priority
+                  sizes="(min-width: 1080px) 56vw, 100vw"
+                />
+                <Link href="/portfolio" className="project-others-button">
+                  See our other projects
+                </Link>
+              </div>
             </Parallax>
           </div>
         </div>
@@ -98,48 +97,6 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
 
       <section className="project-gallery-section">
         <ProjectGallery images={gallery} />
-      </section>
-
-      <section className="pullquote">
-        <blockquote className="reveal">
-          {project.pullquote}
-          <cite>{project.collaborator}</cite>
-        </blockquote>
-      </section>
-
-      <section className="next-project">
-        <div className="section-inner">
-          <Link
-            href={`/portfolio/${next.slug}`}
-            className="next-project-link reveal"
-          >
-            <div>
-              <p className="next-project-label">Next project</p>
-              <h2 className="next-project-title">
-                {next.title}
-                <span className="next-project-arrow" aria-hidden="true">
-                  -&gt;
-                </span>
-              </h2>
-            </div>
-            <ProjectMedia
-              src={nextHeroSrc}
-              alt={next.hero.alt}
-              shape="wide"
-              sizes="(min-width: 1080px) 40vw, 100vw"
-            />
-          </Link>
-        </div>
-      </section>
-
-      <section className="footer-cta">
-        <div className="section-inner footer-cta-inner reveal">
-          <p className="section-label">Working together</p>
-          <h2>Have a space with a similar level of intent?</h2>
-          <Link href="/contact" className="btn-primary">
-            Start a project
-          </Link>
-        </div>
       </section>
     </main>
   )

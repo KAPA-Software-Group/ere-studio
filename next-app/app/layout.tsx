@@ -41,8 +41,19 @@ export default function RootLayout({
       lang="en"
       data-scroll-behavior="smooth"
       className={`${dmSans.variable} ${spectral.variable}`}
+      // The pre-paint inline script below sets data-home-intro / --reveal on
+      // <html> before hydration; this tells React that mismatch is intentional.
+      suppressHydrationWarning
     >
       <body>
+        {/* Set the home-intro state before first paint so the brand reveal is
+            the very first thing painted — no flash of the resting header. The
+            React effect in site-header.tsx re-affirms this after hydration. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(location.pathname==="/"&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.setAttribute("data-home-intro","active");r.style.setProperty("--reveal","0");}}catch(e){}})();`,
+          }}
+        />
         <SiteHeader />
         {children}
         <SiteFooter />

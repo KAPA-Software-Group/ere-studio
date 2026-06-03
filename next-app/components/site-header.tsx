@@ -49,6 +49,7 @@ export function SiteHeader() {
 
     const resetIntro = () => {
       root.removeAttribute("data-home-intro")
+      root.removeAttribute("data-brand-ready")
       root.style.removeProperty("--reveal")
       if (logoFlipRef.current) logoFlipRef.current.style.transform = ""
     }
@@ -100,11 +101,17 @@ export function SiteHeader() {
         flip.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`
       }
 
-      const shouldActivateNav = eased > 0.55
+      // Only surface the header chrome once the wordmark has all but settled,
+      // so it appears after the migration rather than during it.
+      const shouldActivateNav = eased > 0.92
       if (shouldActivateNav !== navActive) {
         navActive = shouldActivateNav
         setNavReady(shouldActivateNav)
       }
+
+      // The wordmark is held invisible until this first positioning pass has
+      // run, so it never paints in its resting header slot and snaps to center.
+      root.setAttribute("data-brand-ready", "")
     }
 
     const onFrame = () => {
