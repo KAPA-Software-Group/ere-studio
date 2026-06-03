@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev --webpack --hostname 127.0.0.1",
-    "build": "next build --webpack",
-    "postbuild": "node scripts/postbuild-vercel.mjs",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
