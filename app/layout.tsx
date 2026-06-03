@@ -1,10 +1,12 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { DM_Sans, Spectral } from "next/font/google"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 import "./globals.css"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 })
@@ -23,18 +25,39 @@ export const metadata: Metadata = {
     "ERE Studio is an interior and spatial design practice for residential, hospitality, renovation, and hybrid spaces.",
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html
       lang="en"
       data-scroll-behavior="smooth"
       className={`${dmSans.variable} ${spectral.variable}`}
+      // The pre-paint inline script below sets data-home-intro / --reveal on
+      // <html> before hydration; this tells React that mismatch is intentional.
+      suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        {/* Set the home-intro state before first paint so the brand reveal is
+            the very first thing painted — no flash of the resting header. The
+            React effect in site-header.tsx re-affirms this after hydration. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(location.pathname==="/"&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.setAttribute("data-home-intro","active");r.style.setProperty("--reveal","0");}}catch(e){}})();`,
+          }}
+        />
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   )
 }
