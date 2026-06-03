@@ -3,6 +3,16 @@ import Image from "next/image"
 import Link from "next/link"
 import { RevealObserver } from "@/components/reveal-observer"
 
+function renderTitle(title: string) {
+  const parts = title.split(" + ")
+  return parts.map((part, index) => (
+    <span key={part}>
+      {part}
+      {index < parts.length - 1 && <span className="title-plus"> + </span>}
+    </span>
+  ))
+}
+
 const shapedSpaces = [
   {
     number: "01",
@@ -28,16 +38,6 @@ export const metadata: Metadata = {
   title: "About | ERE Studio",
   description:
     "About ERE Studio, a small interior and spatial design practice working across residences, hospitality, renovation, and hybrid spaces.",
-}
-
-function renderTitle(title: string) {
-  const parts = title.split(" + ")
-  return parts.map((part, index) => (
-    <span key={part}>
-      {part}
-      {index < parts.length - 1 && <span className="title-plus"> + </span>}
-    </span>
-  ))
 }
 
 export default function AboutPage() {

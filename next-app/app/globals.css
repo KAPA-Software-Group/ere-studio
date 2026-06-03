@@ -1516,7 +1516,7 @@ a:hover > .project-media .project-media-image {
 
 /* Project detail: dense meta + cinematic gallery */
 .project-hero {
-  padding-block: clamp(56px, 8vw, 112px) clamp(64px, 9vw, 128px);
+  padding-block: clamp(24px, 3.5vw, 52px) clamp(28px, 4vw, 56px);
 }
 
 .project-hero-grid {
@@ -1525,16 +1525,16 @@ a:hover > .project-media .project-media-image {
 }
 
 .page-title {
-  font-size: clamp(2.6rem, 7.8vw, 6.4rem);
-  line-height: 0.94;
+  font-size: clamp(2.2rem, 6.2vw, 5rem);
+  line-height: 0.96;
   letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
 .project-meta {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px 18px;
-  margin-top: 44px;
+  margin-top: 32px;
 }
 
 .project-meta div {
@@ -1544,14 +1544,41 @@ a:hover > .project-media .project-media-image {
 }
 
 .project-meta dt {
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
 }
 
 .project-meta dd {
   margin-top: 10px;
-  font-size: 0.94rem;
+  font-size: 1.2rem;
   line-height: 1.4;
+}
+
+.project-lead {
+  margin: clamp(22px, 3vw, 36px) 0 0;
+  color: #2b221d !important;
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+/* Larger "Selected work" back link + arrow on project pages */
+.project-hero-copy .text-link {
+  font-size: 1.12rem;
+  gap: 12px;
+}
+
+.project-hero-copy .text-link::before {
+  font-size: 1.5rem;
+}
+
+/* Same size as the other project titles, but never break "Mediterranean"
+   mid-word so it stays on a single line. */
+.page-title-compact {
+  font-size: clamp(2.2rem, 6.2vw, 4.6rem) !important;
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+  hyphens: none !important;
 }
 
 .project-intro {
@@ -4357,7 +4384,9 @@ a:hover > .project-media .project-media-image {
 
 .about-philosophy-heading {
   max-width: none;
-  margin: clamp(6px, 1.2vw, 16px) 0 clamp(14px, 1.8vw, 22px);
+  margin: clamp(34px, 5vw, 72px) 0 clamp(14px, 1.8vw, 22px);
+  padding-top: clamp(28px, 4vw, 56px);
+  border-top: 1px solid rgba(104, 31, 35, 0.28);
   color: #211917;
   font-family:
     "Black Mango",
@@ -4446,29 +4475,64 @@ a:hover > .project-media .project-media-image {
   transform: translateY(-35%) rotate(-135deg);
 }
 
-.about-space-item summary span {
-  font-family:
-    "Black Mango",
-    Baskerville,
-    Georgia,
-    serif;
-  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+.about-space-item summary span,
+.about-space-item summary strong {
+  font-family: "Awesome Serif Bold", "Awesome Serif", Georgia, serif !important;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   line-height: 1.1;
-  opacity: 0.7;
 }
 
-.about-space-item summary strong {
-  font-family: var(--font-sans);
-  font-size: clamp(1.32rem, 1.9vw, 1.74rem);
-  font-weight: 700;
-  line-height: 1.1;
+/* Smooth reveal when a Spaces We Shape item is expanded. */
+.about-space-item[open] p {
+  animation: about-space-wipe 1700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Reveal the paragraph left to right. */
+@keyframes about-space-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-space-item[open] p {
+    animation: none;
+  }
+}
+
+/* Blinking caret shown while a description types itself out. */
+.type-caret {
+  display: inline-block;
+  width: 0.08em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: #6f2d22;
+  animation: type-caret-blink 700ms steps(1, end) infinite;
+}
+
+@keyframes type-caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .about-space-item p {
-  max-width: 880px;
-  margin: 0 0 clamp(26px, 3vw, 42px) clamp(26px, 4vw, 48px);
+  max-width: none;
+  margin: 0 clamp(34px, 4.5vw, 50px) clamp(26px, 3vw, 42px) clamp(26px, 4vw, 48px);
   color: #342925;
-  font-family: var(--font-sans);
+  font-family: "Awesome Serif Light", "Awesome Serif", Georgia, serif !important;
   font-size: clamp(1.18rem, 1.6vw, 1.5rem);
   line-height: 1.6;
 }
@@ -5018,9 +5082,27 @@ a:hover > .project-media .project-media-image {
   position: fixed;
   inset: 0;
   z-index: 40; /* below the header (50), above page content */
-  background: var(--paper);
+  overflow: hidden;
   opacity: calc(1 - var(--reveal, 1));
   pointer-events: none;
+}
+
+/* Opening photograph sits under the centred wordmark, with a soft fade
+   so the logo reads clearly on top. */
+.brand-veil {
+  background-color: transparent !important;
+}
+
+.brand-veil-image {
+  z-index: 0;
+  object-fit: cover;
+}
+
+.brand-veil-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: rgba(250, 248, 244, 0.5) !important;
 }
 
 /* Header fades from invisible to solid as the brand settles. */
@@ -5139,6 +5221,15 @@ div {
   font-display: swap;
 }
 
+/* Light face (Font 3) for the Spaces We Shape descriptions. */
+@font-face {
+  font-family: "Awesome Serif Light";
+  src: url("/fonts/font-3.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ==========================================================================
    Portfolio page: burgundy canvas + animated flip-through magazine
    These override the global white-canvas rule for the portfolio route only.
@@ -5238,6 +5329,29 @@ main.portfolio-page .mag-leftpage {
 
 .mag-base-left img,
 .mag-leftpage img {
+  object-fit: cover;
+}
+
+/* Inset image frame so a small page margin shows around each photo. */
+.mag-leftpage,
+.mag-photo {
+  padding: clamp(12px, 1.7vw, 22px);
+}
+
+/* A touch more margin on the spine (inner) edge of the left page. */
+.mag-leftpage {
+  padding-right: clamp(20px, 2.6vw, 34px);
+}
+
+.mag-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.mag-frame img {
   object-fit: cover;
 }
 
@@ -5428,6 +5542,29 @@ main.portfolio-page .mag-endpage {
   border-color: #6f2d22;
 }
 
+/* Small "View Projects" button floating over the home slideshow */
+.home-hero {
+  position: relative;
+}
+
+.hero-view-projects {
+  position: absolute;
+  right: clamp(20px, 4vw, 52px);
+  bottom: clamp(20px, 4vw, 52px);
+  left: auto;
+  z-index: 5;
+  padding: 13px 32px;
+  font-size: 0.92rem;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.hero-view-projects:hover {
+  color: #fff;
+  background: #6f2d22;
+  border-color: #6f2d22;
+}
+
 /* Pink hover hue around header nav titles */
 .site-header .nav-links a {
   padding: 6px 16px;
@@ -5457,11 +5594,11 @@ main.portfolio-page .mag-endpage {
   color: #ffffff !important;
   background: transparent !important;
   border-radius: 0;
-  font-size: clamp(2.6rem, 6.4vw, 5.4rem) !important;
+  font-size: clamp(1.6rem, 3.4vw, 2.9rem) !important;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-transform: none;
-  line-height: 1.04;
+  line-height: 1.1;
 }
 
 .portfolio-editorial-section {
@@ -5475,7 +5612,81 @@ main.portfolio-page .mag-endpage {
 
 @media (max-width: 760px) {
   .portfolio-editorial-hero h1 {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
+    font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
   }
+}
+
+/* ==========================================================================
+   Project detail page: full-size flip-through gallery
+   ========================================================================== */
+.project-gallery-section {
+  padding: 0 var(--page-gutter) clamp(44px, 6vw, 84px);
+}
+
+.project-gallery {
+  max-width: 1500px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+  padding-top: clamp(20px, 3vw, 40px);
+}
+
+.project-gallery-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #f1ede6 !important;
+}
+
+.project-gallery-img {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.project-gallery-img[data-active="true"] {
+  opacity: 1;
+}
+
+.pg-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: flex;
+  width: clamp(44px, 4vw, 56px);
+  height: clamp(44px, 4vw, 56px);
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  border: none;
+  border-radius: 999px;
+  background: rgba(20, 10, 8, 0.42);
+  color: #fff;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.pg-nav:hover {
+  background: rgba(111, 45, 34, 0.9);
+}
+
+.pg-prev {
+  left: clamp(12px, 2vw, 24px);
+}
+
+.pg-next {
+  right: clamp(12px, 2vw, 24px);
+}
+
+.project-gallery-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
 }
 

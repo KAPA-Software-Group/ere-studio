@@ -14,7 +14,7 @@ export default function PortfolioPage() {
       <RevealObserver />
 
       <section className="portfolio-editorial-hero">
-        <h1 className="reveal brand-wordmark">Project Portfolio</h1>
+        <h1 className="reveal brand-wordmark">Flip Through Our Projects</h1>
       </section>
 
       <section className="portfolio-editorial-section">

@@ -36,7 +36,7 @@ export const projects: Project[] = [
     materials: "Limewashed plaster, oak, brushed brass",
     collaborator: "Atelier R. Bonnard",
     intro:
-      "A turn-of-the-century apartment off rue de Varenne, returned to a single calm volume after decades of partition. The brief was to restore proportion without erasing the memory of the building.",
+      "Designed for a woman with a passion for contemporary style, this Parisian apartment reflects her bold personality and creative energy.",
     brief:
       "The clients, a screenwriter and a curator, asked for a residence that would receive visitors with the composure of a small gallery and the warmth of a long lunch.",
     approach:
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     materials: "Smoked oak, travertine, raw linen",
     collaborator: "K. Mori Studio",
     intro:
-      "A 1970s tower apartment reconfigured around a single travertine threshold. The interior holds the noise of the city at a distance without pretending the city is not there.",
+      "A vibrant mix of colors and eclectic design, this Midtown Toronto apartment is a playful, artistic retreat that embraces bold expression in every corner.",
     brief:
       "The owner, a touring musician, needed a residence that recovered him between cities. Quiet, low contrast, low maintenance, very few but very good objects.",
     approach:
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     materials: "Tadelakt, terracotta, lacquered citrus wood",
     collaborator: "Estudio Casa Naranja",
     intro:
-      "An eleven-seat counter restaurant in a converted ground-floor storefront. The room had to feel like a place that had been there longer than it has.",
+      "The Little Orange is a vibrant grocery café in Miami, where fresh, local flavors meet a cozy, welcoming atmosphere.",
     brief:
       "An operator with two larger rooms in the city wanted a third that would never read as a brand extension. Specific, fixed in place, easy to overlook from the street.",
     approach:
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     materials: "Istrian limestone, lime plaster, reclaimed oak",
     collaborator: "Studio K. Vidakovic",
     intro:
-      "A long, low summer house above an olive grove on the Istrian coast. The brief was to make a building that the family would walk into without taking off their shoes.",
+      "Coastal gem on the Croatian shoreline, this summer house offers a peaceful escape with natural beauty and effortless charm.",
     brief:
       "A young family with three children and a working olive grove. The house needed to be tough enough for the season and quiet enough for August evenings.",
     approach:

@@ -136,7 +136,19 @@ export function SiteHeader() {
 
   return (
     <>
-      {isHome && <div className="brand-veil" aria-hidden="true" />}
+      {isHome && (
+        <div className="brand-veil" aria-hidden="true">
+          <Image
+            src="/home/opening-page.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="brand-veil-image"
+          />
+          <div className="brand-veil-scrim" />
+        </div>
+      )}
 
       <header className={headerClassName}>
         <nav

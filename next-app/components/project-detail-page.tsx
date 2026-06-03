@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ProjectGallery } from "@/components/project-gallery"
 import { ProjectMedia } from "@/components/ui/project-media"
 import { Parallax } from "@/components/parallax"
 import { RevealObserver } from "@/components/reveal-observer"
@@ -8,8 +9,40 @@ type ProjectDetailPageProps = {
   project: Project
 }
 
+// Ordered project photographs shown on each detail page.
+const detailImages: Record<string, string[]> = {
+  "parisian-suite": Array.from(
+    { length: 10 },
+    (_, i) => `/portfolio/parisian-suite/img-${i + 1}.jpg`,
+  ),
+  "midtown-hideaway": Array.from(
+    { length: 7 },
+    (_, i) => `/portfolio/midtown-hideaway/img-${i + 1}.jpg`,
+  ),
+  "little-orange": [
+    "/portfolio/little-orange/img-1.jpg",
+    "/portfolio/little-orange/img-2.jpg",
+    "/portfolio/little-orange/img-3.jpg",
+    "/portfolio/little-orange/img-4.png",
+  ],
+  "mediterranean-escape": Array.from(
+    { length: 7 },
+    (_, i) => `/portfolio/mediterranean-escape/img-${i + 1}.jpg`,
+  ),
+}
+
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const next = getAdjacentProject(project.slug)
+
+  const custom = detailImages[project.slug]
+  const heroSrc = custom?.[0] ?? project.hero.src
+  const gallery = custom
+    ? custom.slice(1).map((src, i) => ({
+        src,
+        alt: `${project.title}, image ${i + 2}`,
+      }))
+    : project.gallery
+  const nextHeroSrc = detailImages[next.slug]?.[0] ?? next.hero.src
 
   return (
     <main className="page-shell">
@@ -24,40 +57,35 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             <p className="section-label reveal">
               {project.type} / {project.year}
             </p>
-            <h1 className="page-title reveal reveal-delay-1">
+            <h1
+              className={`page-title reveal reveal-delay-1${
+                project.slug === "mediterranean-escape"
+                  ? " page-title-compact"
+                  : ""
+              }`}
+            >
               {project.title}
             </h1>
             <dl className="project-meta reveal reveal-delay-2">
+              <div>
+                <dt>Project</dt>
+                <dd>{project.type}</dd>
+              </div>
               <div>
                 <dt>Location</dt>
                 <dd>{project.location}</dd>
               </div>
               <div>
-                <dt>Year</dt>
-                <dd>{project.year}</dd>
-              </div>
-              <div>
                 <dt>Scope</dt>
                 <dd>{project.scope}</dd>
               </div>
-              <div>
-                <dt>Materials</dt>
-                <dd>{project.materials}</dd>
-              </div>
-              <div>
-                <dt>Category</dt>
-                <dd>{project.category}</dd>
-              </div>
-              <div>
-                <dt>Collaborator</dt>
-                <dd>{project.collaborator}</dd>
-              </div>
             </dl>
+            <p className="project-lead reveal reveal-delay-3">{project.intro}</p>
           </div>
           <div className="reveal reveal-delay-2">
             <Parallax amount={0.05}>
               <ProjectMedia
-                src={project.hero.src}
+                src={heroSrc}
                 alt={project.hero.alt}
                 shape="tall"
                 priority
@@ -68,40 +96,8 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
         </div>
       </section>
 
-      <section className="project-intro">
-        <div className="section-inner project-intro-grid">
-          <h2 className="reveal">{project.intro}</h2>
-          <div className="project-intro-body reveal reveal-delay-1">
-            <article>
-              <p className="intro-eyebrow">01 / Brief</p>
-              <p>{project.brief}</p>
-            </article>
-            <article>
-              <p className="intro-eyebrow">02 / Approach</p>
-              <p>{project.approach}</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="section-inner cine-gallery">
-          {project.gallery.map((image, index) => (
-            <div key={image.src} className={`reveal reveal-delay-${index + 1}`}>
-              <ProjectMedia
-                src={image.src}
-                alt={image.alt}
-                shape={
-                  index === 0 ? "wide" : index === 1 ? "tall" : "panoramic"
-                }
-                caption={image.alt}
-                sizes={
-                  index === 2 ? "100vw" : "(min-width: 1080px) 50vw, 100vw"
-                }
-              />
-            </div>
-          ))}
-        </div>
+      <section className="project-gallery-section">
+        <ProjectGallery images={gallery} />
       </section>
 
       <section className="pullquote">
@@ -127,7 +123,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
               </h2>
             </div>
             <ProjectMedia
-              src={next.hero.src}
+              src={nextHeroSrc}
               alt={next.hero.alt}
               shape="wide"
               sizes="(min-width: 1080px) 40vw, 100vw"

@@ -10,6 +10,12 @@ export default function Home() {
 
       <section className="home-hero">
         <HomeSlideshow />
+        <Link
+          href="/portfolio"
+          className="start-project-button hero-view-projects"
+        >
+          View Projects
+        </Link>
       </section>
 
       <div className="start-project-cta">

@@ -10,16 +10,41 @@ const FLIP_INTERVAL = 3600
 
 const pad = (n: number) => String(n).padStart(2, "0")
 
+type ImageSpec = { src: string; position?: string }
+
+// Two photographs per project: left page image + right page image.
+const spreadImages: Record<string, { left: ImageSpec; right: ImageSpec }> = {
+  "parisian-suite": {
+    left: { src: "/portfolio/ps-1.jpg" },
+    right: { src: "/portfolio/ps-2.jpg" },
+  },
+  "midtown-hideaway": {
+    left: { src: "/portfolio/mh-1.jpg" },
+    right: { src: "/portfolio/mh-2.jpg", position: "center 80%" },
+  },
+  "little-orange": {
+    left: { src: "/portfolio/nlo-1.jpg" },
+    right: { src: "/portfolio/nlo-2.jpg" },
+  },
+  "mediterranean-escape": {
+    left: { src: "/portfolio/me-1.jpg" },
+    right: { src: "/portfolio/me-2.jpg" },
+  },
+}
+
 function LeftPage({ project }: { project: Project }) {
-  const image = project.gallery[0] ?? project.hero
+  const spec = spreadImages[project.slug]?.left ?? { src: project.hero.src }
   return (
     <div className="mag-leftpage">
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        sizes="(min-width: 900px) 32vw, 46vw"
-      />
+      <div className="mag-frame">
+        <Image
+          src={spec.src}
+          alt={`${project.title} interior`}
+          fill
+          sizes="(min-width: 900px) 32vw, 46vw"
+          style={spec.position ? { objectPosition: spec.position } : undefined}
+        />
+      </div>
     </div>
   )
 }
@@ -33,15 +58,19 @@ function RightPage({
   index: number
   total: number
 }) {
+  const spec = spreadImages[project.slug]?.right ?? { src: project.hero.src }
   return (
     <div className="mag-rightpage">
       <div className="mag-photo">
-        <Image
-          src={project.hero.src}
-          alt={project.hero.alt}
-          fill
-          sizes="(min-width: 900px) 32vw, 46vw"
-        />
+        <div className="mag-frame">
+          <Image
+            src={spec.src}
+            alt={`${project.title} interior`}
+            fill
+            sizes="(min-width: 900px) 32vw, 46vw"
+            style={spec.position ? { objectPosition: spec.position } : undefined}
+          />
+        </div>
       </div>
       <div className="mag-text">
         <p className="mag-meta">
