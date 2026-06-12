@@ -14,7 +14,7 @@ export function SiteFooter() {
       <div className="site-footer-inner">
         <div className="footer-brand">
           <Link href="/" className="footer-logo">
-            ERE Studio
+            ère studio
           </Link>
           <p>
             Interior and spatial design for rooms with strong bones, quiet

@@ -152,6 +152,7 @@ export function SiteHeader() {
             priority
             sizes="100vw"
             className="brand-veil-image"
+            unoptimized={process.env.NODE_ENV === "development"}
           />
           <div className="brand-veil-scrim" />
         </div>

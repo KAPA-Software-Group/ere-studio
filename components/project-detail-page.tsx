@@ -1,7 +1,5 @@
+import Image from "next/image"
 import Link from "next/link"
-import { ProjectGallery } from "@/components/project-gallery"
-import { ProjectMedia } from "@/components/ui/project-media"
-import { Parallax } from "@/components/parallax"
 import { RevealObserver } from "@/components/reveal-observer"
 import { type Project } from "@/lib/projects"
 
@@ -31,73 +29,95 @@ const detailImages: Record<string, string[]> = {
   ),
 }
 
+const dev = process.env.NODE_ENV === "development"
+
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const custom = detailImages[project.slug]
   const heroSrc = custom?.[0] ?? project.hero.src
-  const gallery = custom
-    ? custom.slice(1).map((src, i) => ({
-        src,
-        alt: `${project.title}, image ${i + 2}`,
-      }))
-    : project.gallery
+  const galleryImages = custom
+    ? custom.slice(1)
+    : project.gallery.map((g) => g.src)
 
   return (
-    <main className="page-shell">
+    <main className="page-shell project-detail">
       <RevealObserver />
 
-      <section className="project-hero">
-        <div className="section-inner project-hero-grid">
-          <div className="project-hero-copy">
-            <p className="section-label reveal">
-              {project.type} / {project.year}
-            </p>
-            <h1
-              className={`page-title reveal reveal-delay-1${
-                project.slug === "mediterranean-escape"
-                  ? " page-title-compact"
-                  : ""
-              }`}
-            >
-              {project.title}
-            </h1>
-            <dl className="project-meta reveal reveal-delay-2">
+      {/* Hero image first */}
+      <section className="project-detail-hero">
+        <div className="project-detail-hero-frame">
+          <Image
+            src={heroSrc}
+            alt={project.hero.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="project-detail-hero-img"
+            unoptimized={dev}
+          />
+        </div>
+      </section>
+
+      {/* Title + meta + lead, underneath the hero */}
+      <section className="project-detail-head">
+        <div className="section-inner">
+          <div className="project-detail-head-grid">
+            <h1 className="project-detail-title reveal">{project.title}</h1>
+            <dl className="project-detail-meta reveal reveal-delay-1">
               <div>
-                <dt>Project</dt>
+                <dt>Date</dt>
+                <dd>{project.year}</dd>
+              </div>
+              <div>
+                <dt>Type</dt>
                 <dd>{project.type}</dd>
               </div>
               <div>
                 <dt>Location</dt>
                 <dd>{project.location}</dd>
               </div>
-              <div>
-                <dt>Scope</dt>
-                <dd>{project.scope}</dd>
-              </div>
             </dl>
-            <p className="project-lead reveal reveal-delay-3">{project.intro}</p>
           </div>
-          <div className="reveal reveal-delay-2">
-            <Parallax amount={0.05}>
-              <div className="project-hero-media">
-                <ProjectMedia
-                  src={heroSrc}
-                  alt={project.hero.alt}
-                  shape="tall"
-                  priority
-                  sizes="(min-width: 1080px) 56vw, 100vw"
-                />
-                <Link href="/portfolio" className="project-others-button">
-                  See our other projects
-                </Link>
-              </div>
-            </Parallax>
+          <p className="project-detail-lead reveal reveal-delay-2">
+            {project.intro}
+          </p>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="project-detail-gallery">
+        <div className="section-inner">
+          <div className="project-detail-gallery-grid stagger">
+            {galleryImages.map((src, i) => {
+              const full =
+                i === galleryImages.length - 1 && galleryImages.length % 2 === 1
+              return (
+                <figure
+                  key={src}
+                  className={`project-detail-figure${
+                    full ? " project-detail-figure-full" : ""
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    alt={`${project.title}, image ${i + 2}`}
+                    fill
+                    sizes={full ? "100vw" : "(min-width: 760px) 48vw, 100vw"}
+                    className="project-detail-figure-img"
+                    unoptimized={dev}
+                  />
+                </figure>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <section className="project-gallery-section">
-        <ProjectGallery images={gallery} />
-      </section>
+      {/* Back to all projects */}
+      <div className="start-project-cta">
+        <Link href="/portfolio" className="start-project-button">
+          Go back to all projects
+        </Link>
+      </div>
     </main>
   )
 }

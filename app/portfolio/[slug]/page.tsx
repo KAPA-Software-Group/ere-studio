@@ -23,13 +23,13 @@ export async function generateMetadata({
 
   if (!project) {
     return {
-      title: "Project | ERE Studio",
+      title: "Project | ère studio",
     }
   }
 
   return {
-    title: `${project.title} | ERE Studio`,
-    description: `${project.title}, a ${project.type.toLowerCase()} project by ERE Studio in ${project.location}.`,
+    title: `${project.title} | ère studio`,
+    description: `${project.title}, a ${project.type.toLowerCase()} project by ère studio in ${project.location}.`,
   }
 }
 

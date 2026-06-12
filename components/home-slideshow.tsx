@@ -3,11 +3,12 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-// First slide is the existing hero photograph; the rest are the new interiors.
+// The first slide is the page's main photo (the Midtown Hideaway bedroom
+// looking through to the den); it leads, then the carousel cycles the rest.
 const slides = [
   {
-    src: "/projects/midtown-hideaway/opening-image-final.jpg",
-    alt: "Midtown Hideaway hallway looking through a red arch toward blue built-ins and pink boots.",
+    src: "/home/midtown-bedroom-den.jpg",
+    alt: "Midtown Hideaway bedroom with botanical wallpaper looking through a sage door into a warm terracotta den.",
   },
   {
     src: "/home/slideshow/slide-1.jpg",
@@ -25,9 +26,15 @@ const slides = [
     src: "/home/slideshow/slide-4.jpg",
     alt: "Two-level wellness store with potted orange trees and warm timber shelving.",
   },
+  {
+    src: "/projects/midtown-hideaway/opening-image-final.jpg",
+    alt: "Midtown Hideaway hallway looking through a red arch toward blue built-ins and pink boots.",
+  },
 ]
 
-// How long each image stays on screen before crossfading to the next.
+// Hold the main photo a beat longer on load before the carousel begins,
+// then crossfade between the remaining images at a steady pace.
+const FIRST_SLIDE_DURATION = 4200
 const SLIDE_DURATION = 2800
 
 export function HomeSlideshow() {
@@ -39,17 +46,18 @@ export function HomeSlideshow() {
     ).matches
     if (prefersReduced) return
 
-    const id = setInterval(() => {
+    let timeout = window.setTimeout(function advance() {
       setIndex((i) => (i + 1) % slides.length)
-    }, SLIDE_DURATION)
+      timeout = window.setTimeout(advance, SLIDE_DURATION)
+    }, FIRST_SLIDE_DURATION)
 
-    return () => clearInterval(id)
+    return () => window.clearTimeout(timeout)
   }, [])
 
   return (
     <div
       className="boots-hero-stage hero-slideshow"
-      aria-label="ERE Studio interiors"
+      aria-label="ère studio interiors"
     >
       {slides.map((slide, i) => (
         <Image
@@ -62,6 +70,7 @@ export function HomeSlideshow() {
           className="boots-hero-image hero-slide"
           data-active={i === index ? "true" : undefined}
           aria-hidden={i === index ? undefined : "true"}
+          unoptimized={process.env.NODE_ENV === "development"}
         />
       ))}
     </div>
