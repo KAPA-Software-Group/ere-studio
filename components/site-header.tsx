@@ -93,8 +93,13 @@ export function SiteHeader() {
         const rect = slot.getBoundingClientRect()
         const restCx = rect.left + rect.width / 2
         const restCy = rect.top + rect.height / 2
+        const introGroupLift = Math.min(
+          52,
+          Math.max(30, window.innerHeight * 0.05),
+        )
         const dx = (window.innerWidth / 2 - restCx) * (1 - eased)
-        const dy = (window.innerHeight / 2 - restCy) * (1 - eased)
+        const dy =
+          (window.innerHeight / 2 - introGroupLift - restCy) * (1 - eased)
         const desiredCenterWidth = Math.min(window.innerWidth * 0.62, 560)
         const scaleAtCenter = Math.max(1, desiredCenterWidth / (rect.width || 1))
         const scale = scaleAtCenter + (1 - scaleAtCenter) * eased
@@ -144,7 +149,7 @@ export function SiteHeader() {
   return (
     <>
       {isHome && (
-        <div className="brand-veil" aria-hidden="true">
+        <div className="brand-veil">
           <Image
             src="/home/opening-page.jpg"
             alt=""
@@ -155,6 +160,10 @@ export function SiteHeader() {
             unoptimized={process.env.NODE_ENV === "development"}
           />
           <div className="brand-veil-scrim" />
+          <p className="brand-veil-tagline">
+            Interior and spatial design for rooms with strong bones, quiet
+            materials, and a clear reason to exist.
+          </p>
         </div>
       )}
 

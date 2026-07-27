@@ -16,10 +16,6 @@ export function SiteFooter() {
           <Link href="/" className="footer-logo">
             ère studio
           </Link>
-          <p>
-            Interior and spatial design for rooms with strong bones, quiet
-            materials, and a clear reason to exist.
-          </p>
         </div>
 
         <nav className="footer-nav" aria-label="Footer navigation">

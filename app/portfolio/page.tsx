@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 // Landscape cover photograph per project (the studio's own imagery).
 const covers: Record<string, string> = {
-  "parisian-suite": "/portfolio/ps-1.jpg",
-  "midtown-hideaway": "/portfolio/mh-1.jpg",
-  "little-orange": "/portfolio/nlo-1.jpg",
+  "parisian-suite": "/portfolio/parisian-suite-cover.jpg",
+  "midtown-hideaway": "/portfolio/midtown-hideaway-cover.jpg",
+  "little-orange": "/portfolio/little-orange-cover-cropped.jpg",
   "mediterranean-escape": "/portfolio/me-1.jpg",
 }
 
@@ -25,36 +25,39 @@ export default function PortfolioPage() {
 
       <section className="projects-index">
         <div className="section-inner">
-          <header className="projects-index-head reveal">
-            <h1>Projects</h1>
+          <header className="projects-index-head">
+            <h1>Portfolio</h1>
+            <p>
+              Selected interiors across residences, hospitality, renovation,
+              and hybrid spaces. Each project is shaped around atmosphere,
+              proportion, and the way a room is meant to be lived in.
+            </p>
           </header>
 
-          <div className="projects-index-grid stagger">
+          <div className="projects-index-list">
             {projects.map((project) => (
               <Link
                 key={project.slug}
                 href={`/portfolio/${project.slug}`}
-                className="project-tile"
+                className="project-feature"
               >
-                <div className="project-tile-media">
+                <div className="project-feature-media">
                   <Image
                     src={covers[project.slug] ?? project.hero.src}
                     alt={project.hero.alt}
                     fill
-                    sizes="(min-width: 980px) 31vw, (min-width: 620px) 46vw, 92vw"
-                    className="project-tile-img"
+                    sizes="(min-width: 1120px) 1040px, 92vw"
+                    className="project-feature-img"
                     unoptimized={process.env.NODE_ENV === "development"}
                   />
                 </div>
-                <h2 className="project-tile-title">{project.title}</h2>
+                <div className="project-feature-card">
+                  <h2>{project.title}</h2>
+                  <p>{project.intro}</p>
+                </div>
+                <span className="project-feature-action">Learn More</span>
               </Link>
             ))}
-
-            <div className="project-tile project-tile-soon">
-              <div className="project-tile-media project-tile-media-soon">
-                <span>More coming soon</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>

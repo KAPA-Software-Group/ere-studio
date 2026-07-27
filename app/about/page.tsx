@@ -55,10 +55,10 @@ export default function AboutPage() {
           </div>
           <div className="about-studio-image-wrap reveal reveal-delay-1">
             <Image
-              src="/projects/midtown-hideaway/magazine-red-room.jpg"
-              alt="A warm red study nook with framed art, flowers, books, and a blue chair."
-              width={924}
-              height={1368}
+              src="/about/owners-original.jpg"
+              alt="The owners of ERE Studio in a colorful interior."
+              width={3764}
+              height={5638}
               sizes="(min-width: 900px) 44vw, 100vw"
               className="about-studio-image"
               priority

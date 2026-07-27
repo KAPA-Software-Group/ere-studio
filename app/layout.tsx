@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { DM_Sans, Spectral } from "next/font/google"
+import { DM_Sans, Geist, Spectral } from "next/font/google"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import "./globals.css"
@@ -16,6 +16,12 @@ const spectral = Spectral({
   weight: ["200", "300", "400"],
   style: ["normal", "italic"],
   variable: "--font-serif",
+  display: "swap",
+})
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
   display: "swap",
 })
 
@@ -40,7 +46,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${dmSans.variable} ${spectral.variable}`}
+      className={`${dmSans.variable} ${spectral.variable} ${geistSans.variable}`}
       // The pre-paint inline script below sets data-home-intro / --reveal on
       // <html> before hydration; this tells React that mismatch is intentional.
       suppressHydrationWarning
