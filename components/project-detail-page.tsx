@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { useCallback, useEffect, useState } from "react"
 import { RevealObserver } from "@/components/reveal-observer"
 import { type Project } from "@/lib/projects"
 
@@ -37,6 +40,52 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const galleryImages = custom
     ? custom.slice(1)
     : project.gallery.map((g) => g.src)
+  const lightboxImages = [
+    { src: heroSrc, alt: project.hero.alt },
+    ...galleryImages.map((src, i) => ({
+      src,
+      alt: `${project.title}, image ${i + 2}`,
+    })),
+  ]
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const totalImages = lightboxImages.length
+  const activeImage = lightboxImages[lightboxIndex]
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index)
+    setLightboxOpen(true)
+  }
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), [])
+
+  const showPreviousImage = useCallback(() => {
+    setLightboxIndex((index) => (index - 1 + totalImages) % totalImages)
+  }, [totalImages])
+
+  const showNextImage = useCallback(() => {
+    setLightboxIndex((index) => (index + 1) % totalImages)
+  }, [totalImages])
+
+  useEffect(() => {
+    if (!lightboxOpen) return
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeLightbox()
+      if (event.key === "ArrowLeft") showPreviousImage()
+      if (event.key === "ArrowRight") showNextImage()
+    }
+
+    window.addEventListener("keydown", onKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener("keydown", onKeyDown)
+    }
+  }, [closeLightbox, lightboxOpen, showNextImage, showPreviousImage])
 
   return (
     <main className="page-shell project-detail">
@@ -45,15 +94,22 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       {/* Hero image first */}
       <section className="project-detail-hero">
         <div className="project-detail-hero-frame">
-          <Image
-            src={heroSrc}
-            alt={project.hero.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="project-detail-hero-img"
-            unoptimized={dev}
-          />
+          <button
+            type="button"
+            className="project-image-trigger project-image-trigger-hero"
+            onClick={() => openLightbox(0)}
+            aria-label={`Open ${project.title} image 1`}
+          >
+            <Image
+              src={heroSrc}
+              alt={project.hero.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="project-detail-hero-img"
+              unoptimized={dev}
+            />
+          </button>
         </div>
       </section>
 
@@ -97,14 +153,21 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                     full ? " project-detail-figure-full" : ""
                   }`}
                 >
-                  <Image
-                    src={src}
-                    alt={`${project.title}, image ${i + 2}`}
-                    fill
-                    sizes={full ? "100vw" : "(min-width: 760px) 48vw, 100vw"}
-                    className="project-detail-figure-img"
-                    unoptimized={dev}
-                  />
+                  <button
+                    type="button"
+                    className="project-image-trigger"
+                    onClick={() => openLightbox(i + 1)}
+                    aria-label={`Open ${project.title} image ${i + 2}`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${project.title}, image ${i + 2}`}
+                      fill
+                      sizes={full ? "100vw" : "(min-width: 760px) 48vw, 100vw"}
+                      className="project-detail-figure-img"
+                      unoptimized={dev}
+                    />
+                  </button>
                 </figure>
               )
             })}
@@ -118,6 +181,65 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
           Go back to all projects
         </Link>
       </div>
+
+      {lightboxOpen && activeImage && (
+        <div
+          className="project-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} image carousel`}
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            className="project-lightbox-close"
+            onClick={closeLightbox}
+            aria-label="Close expanded image"
+          >
+            ×
+          </button>
+          <button
+            type="button"
+            className="project-lightbox-nav project-lightbox-prev"
+            onClick={(event) => {
+              event.stopPropagation()
+              showPreviousImage()
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <figure
+            className="project-lightbox-figure"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              src={activeImage.src}
+              alt={activeImage.alt}
+              fill
+              sizes="100vw"
+              className="project-lightbox-img"
+              unoptimized={dev}
+              priority
+            />
+            <figcaption className="project-lightbox-count">
+              {String(lightboxIndex + 1).padStart(2, "0")} /{" "}
+              {String(totalImages).padStart(2, "0")}
+            </figcaption>
+          </figure>
+          <button
+            type="button"
+            className="project-lightbox-nav project-lightbox-next"
+            onClick={(event) => {
+              event.stopPropagation()
+              showNextImage()
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </div>
+      )}
     </main>
   )
 }

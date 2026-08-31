@@ -161,8 +161,7 @@ export function SiteHeader() {
           />
           <div className="brand-veil-scrim" />
           <p className="brand-veil-tagline">
-            Interior and spatial design for rooms with strong bones, quiet
-            materials, and a clear reason to exist.
+            Interior and spatial design for rooms with strong bones.
           </p>
         </div>
       )}

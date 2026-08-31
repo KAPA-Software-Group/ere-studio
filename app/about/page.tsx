@@ -72,10 +72,10 @@ export default function AboutPage() {
           <h2 className="about-philosophy-heading reveal">Our Philosophy</h2>
           <div className="about-studio-note-copy reveal">
             <p>
-              Our studio takes on only a select number of projects each year,
-              allowing us to give every client, space, and detail the attention
-              it deserves. Each project is carefully curated around the client’s
-              taste and vision to ensuring the final design feels personal.
+              Our studio is committed to providing each client, space and
+              detail the attention it deserves. Each project is carefully
+              curated around the client’s taste and vision to ensuring the final
+              design feels personal.
             </p>
             <p>
               From the overall concept to the smallest finishing detail, we

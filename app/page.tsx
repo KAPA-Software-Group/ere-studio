@@ -14,7 +14,7 @@ export default function Home() {
           href="/portfolio"
           className="start-project-button hero-view-projects"
         >
-          View Projects
+          View Portfolio
         </Link>
       </section>
 
