@@ -10,26 +10,16 @@ type ProjectDetailPageProps = {
   project: Project
 }
 
-// Ordered project photographs shown on each detail page.
+const gallery = (slug: string, count: number) =>
+  Array.from({ length: count }, (_, i) => `/portfolio/${slug}/img-${i + 1}.jpg`)
+
+// Ordered project photographs shown on each detail page (first is the hero).
 const detailImages: Record<string, string[]> = {
-  "parisian-suite": Array.from(
-    { length: 10 },
-    (_, i) => `/portfolio/parisian-suite/img-${i + 1}.jpg`,
-  ),
-  "midtown-hideaway": Array.from(
-    { length: 7 },
-    (_, i) => `/portfolio/midtown-hideaway/img-${i + 1}.jpg`,
-  ),
-  "little-orange": [
-    "/portfolio/little-orange/img-1.jpg",
-    "/portfolio/little-orange/img-2.jpg",
-    "/portfolio/little-orange/img-3.jpg",
-    "/portfolio/little-orange/img-4.png",
-  ],
-  "mediterranean-escape": Array.from(
-    { length: 7 },
-    (_, i) => `/portfolio/mediterranean-escape/img-${i + 1}.jpg`,
-  ),
+  "parisian-suite": gallery("parisian-suite", 16),
+  "midtown-hideaway": gallery("midtown-hideaway", 17),
+  "little-orange": gallery("little-orange", 7),
+  "artists-escape": gallery("artists-escape", 14),
+  "liberty-village": gallery("liberty-village", 10),
 }
 
 const dev = process.env.NODE_ENV === "development"
@@ -178,7 +168,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       {/* Back to all projects */}
       <div className="start-project-cta">
         <Link href="/portfolio" className="start-project-button">
-          Go back to all projects
+          Go back to portfolio
         </Link>
       </div>
 

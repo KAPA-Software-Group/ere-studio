@@ -2,8 +2,6 @@ import Link from "next/link"
 
 const footerLinks = [
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/services", label: "Services" },
-  { href: "/process", label: "Process" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ]
@@ -27,9 +25,21 @@ export function SiteFooter() {
         </nav>
 
         <div className="footer-meta">
-          <span>Toronto / Paris / Remote</span>
+          <span>Toronto / Miami / Paris</span>
           <span>Project inquiries open for 2026</span>
         </div>
+      </div>
+
+      <div className="footer-credit">
+        <a
+          href="https://kintorasolutions.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>Powered by</span>
+          <span className="footer-credit-mark" aria-hidden="true" />
+          <span className="footer-credit-name">Kintora Solutions</span>
+        </a>
       </div>
     </footer>
   )

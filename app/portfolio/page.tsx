@@ -15,8 +15,16 @@ const covers: Record<string, string> = {
   "parisian-suite": "/portfolio/parisian-suite-cover.jpg",
   "midtown-hideaway": "/portfolio/midtown-hideaway-cover.jpg",
   "little-orange": "/portfolio/little-orange-cover-cropped.jpg",
-  "mediterranean-escape": "/portfolio/me-1.jpg",
+  "artists-escape": "/portfolio/me-1.jpg",
+  "liberty-village": "/portfolio/liberty-village-cover.jpg",
 }
+
+// Featured project leads the list; the rest keep their usual order.
+const FEATURED = "midtown-hideaway"
+const orderedProjects = [
+  ...projects.filter((p) => p.slug === FEATURED),
+  ...projects.filter((p) => p.slug !== FEATURED),
+]
 
 export default function PortfolioPage() {
   return (
@@ -27,15 +35,10 @@ export default function PortfolioPage() {
         <div className="section-inner">
           <header className="projects-index-head">
             <h1>Portfolio</h1>
-            <p>
-              Selected interiors across residences, hospitality, renovation,
-              and hybrid spaces. Each project is shaped around atmosphere,
-              proportion, and the way a room is meant to be lived in.
-            </p>
           </header>
 
           <div className="projects-index-list">
-            {projects.map((project) => (
+            {orderedProjects.map((project) => (
               <Link
                 key={project.slug}
                 href={`/portfolio/${project.slug}`}
@@ -53,7 +56,6 @@ export default function PortfolioPage() {
                 </div>
                 <div className="project-feature-card">
                   <h2>{project.title}</h2>
-                  <p>{project.intro}</p>
                 </div>
                 <span className="project-feature-action">Learn More</span>
               </Link>

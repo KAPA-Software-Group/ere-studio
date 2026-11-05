@@ -26,9 +26,13 @@ const spreadImages: Record<string, { left: ImageSpec; right: ImageSpec }> = {
     left: { src: "/portfolio/nlo-1.jpg" },
     right: { src: "/portfolio/nlo-2.jpg" },
   },
-  "mediterranean-escape": {
+  "artists-escape": {
     left: { src: "/portfolio/me-1.jpg" },
     right: { src: "/portfolio/me-2.jpg" },
+  },
+  "liberty-village": {
+    left: { src: "/portfolio/lv-1.jpg" },
+    right: { src: "/portfolio/lv-2.jpg" },
   },
 }
 

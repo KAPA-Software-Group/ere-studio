@@ -22,22 +22,30 @@ const shapedSpaces = [
   },
   {
     number: "02",
-    title: "Hybrid Spaces",
-    description:
-      "We design flexible spaces that can shift with your needs, whether that means blending work and home, entertaining and everyday living, or comfort and functionality. The goal is to create rooms that feel effortless, adaptable, and refined without losing warmth or personality.",
-  },
-  {
-    number: "03",
     title: "Renovation + Restoration",
     description:
       "We help reimagine existing spaces while preserving what makes them meaningful. Through careful updates, material selections, and design direction, we bring new life to homes with respect for their original character and lasting value.",
   },
+  {
+    number: "03",
+    title: "Hospitality & Commercial Design",
+    description:
+      "We create thoughtfully designed spaces that balance style, functionality, and brand identity. From unique restaurants and eclectic wellness spaces to inspiring workplaces and retail environments, each project is tailored to your brand.",
+  },
+]
+
+const processSteps = [
+  { number: "01", title: "Foundational Meeting" },
+  { number: "02", title: "Design Presentation" },
+  { number: "03", title: "Delivery of Design Package" },
+  { number: "04", title: "Upon Approval: Implementation of Design" },
+  { number: "05", title: "Installation" },
 ]
 
 export const metadata: Metadata = {
   title: "About | ERE Studio",
   description:
-    "About ERE Studio, a small interior and spatial design practice working across residences, hospitality, renovation, and hybrid spaces.",
+    "About ERE Studio, a small interior and spatial design practice working across residences, renovation, hospitality, and commercial spaces.",
 }
 
 export default function AboutPage() {
@@ -73,9 +81,9 @@ export default function AboutPage() {
           <div className="about-studio-note-copy reveal">
             <p>
               Our studio is committed to providing each client, space and
-              detail the attention it deserves. Each project is carefully
-              curated around the client’s taste and vision to ensuring the final
-              design feels personal.
+              detail the attention it deserves. We design and hand-select every
+              element of your space, from the interior architecture to the
+              final furnishings, delivering a cohesive design experience.
             </p>
             <p>
               From the overall concept to the smallest finishing detail, we
@@ -97,6 +105,18 @@ export default function AboutPage() {
                 </details>
               ))}
             </div>
+          </div>
+
+          <div className="about-spaces about-process reveal">
+            <h2>Process</h2>
+            <ol className="about-spaces-list about-process-list">
+              {processSteps.map((step) => (
+                <li key={step.number} className="about-space-item about-process-item">
+                  <span>{step.number}</span>
+                  <strong>{step.title}</strong>
+                </li>
+              ))}
+            </ol>
           </div>
 
           <div className="start-project-cta about-cta">

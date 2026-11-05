@@ -137,8 +137,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "mediterranean-escape",
-    title: "Mediterranean Escape",
+    slug: "artists-escape",
+    title: "Artist’s Escape",
     location: "Bale, Croatia",
     year: "2025",
     type: "Residential",
@@ -170,6 +170,42 @@ export const projects: Project[] = [
       {
         src: unsplash("photo-1554995207-c18c203602cb"),
         alt: "Long table set for a late August lunch.",
+      },
+    ],
+  },
+  {
+    slug: "liberty-village",
+    title: "Liberty Village",
+    location: "Toronto, ON",
+    year: "2026",
+    type: "Residential",
+    category: "Condo Interior",
+    scope: "Full interior, colour, art curation, soft furnishings",
+    materials: "Hand-painted mural, lacquered wood, wool, leather",
+    collaborator: "Photography by James Morley / doublespace",
+    intro:
+      "A colourful Liberty Village condo where painted murals, collected art, and rich colour turn a compact Toronto home into a warm, personal retreat.",
+    brief:
+      "A compact downtown condo that needed to feel personal and layered, with every room given its own character.",
+    approach:
+      "Each room carries its own colour: a botanical mural in one bedroom, soft blue in the other, peach in the bath and dining corner, and a deep red rug anchoring the living room.",
+    pullquote: "Colour is the cheapest square footage a small home can buy.",
+    hero: {
+      src: "/portfolio/liberty-village/img-1.jpg",
+      alt: "Living room with a paper lantern, leather lounge chairs, and a poolside photograph above a low credenza.",
+    },
+    gallery: [
+      {
+        src: "/portfolio/liberty-village/img-2.jpg",
+        alt: "Sofa and oval coffee table on a red rug beneath a paper lantern.",
+      },
+      {
+        src: "/portfolio/liberty-village/img-3.jpg",
+        alt: "Bedroom with a hand-painted botanical mural and a carved wood headboard.",
+      },
+      {
+        src: "/portfolio/liberty-village/img-4.jpg",
+        alt: "Round stone dining table beside a peach wall hung with painted plates.",
       },
     ],
   },
