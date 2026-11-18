@@ -6,9 +6,6 @@ type FieldName =
   | "name"
   | "email"
   | "phone"
-  | "budget"
-  | "timeline"
-  | "projectType"
   | "location"
 
 type BaseField = {
@@ -19,14 +16,10 @@ type BaseField = {
   full?: boolean
 }
 
-type InputField = BaseField & { kind: "input"; type: string }
-type SelectField = BaseField & { kind: "select"; options: string[] }
-
-type Field = InputField | SelectField
+type Field = BaseField & { type: string }
 
 const fields: Field[] = [
   {
-    kind: "input",
     label: "Name",
     name: "name",
     type: "text",
@@ -34,7 +27,6 @@ const fields: Field[] = [
     required: true,
   },
   {
-    kind: "input",
     label: "Email",
     name: "email",
     type: "email",
@@ -42,53 +34,12 @@ const fields: Field[] = [
     required: true,
   },
   {
-    kind: "input",
     label: "Phone number",
     name: "phone",
     type: "tel",
     helper: "Optional, if you prefer a call.",
   },
   {
-    kind: "select",
-    label: "Budget",
-    name: "budget",
-    helper: "An approximate range is fine.",
-    options: [
-      "Under $25k",
-      "$25k – $50k",
-      "$50k – $100k",
-      "$100k – $250k",
-      "$250k +",
-    ],
-  },
-  {
-    kind: "select",
-    label: "Timeline",
-    name: "timeline",
-    helper: "When you would like to begin.",
-    options: [
-      "Flexible",
-      "Within 1–3 months",
-      "Within 3–6 months",
-      "Within 6–12 months",
-      "12+ months out",
-    ],
-  },
-  {
-    kind: "select",
-    label: "Project type",
-    name: "projectType",
-    helper: "What you are planning.",
-    options: [
-      "Residential",
-      "Hospitality",
-      "Renovation + Restoration",
-      "Hybrid Space",
-      "Other",
-    ],
-  },
-  {
-    kind: "input",
     label: "Project location",
     name: "location",
     type: "text",
@@ -101,9 +52,6 @@ const initialValues: Record<FieldName, string> = {
   name: "",
   email: "",
   phone: "",
-  budget: "",
-  timeline: "",
-  projectType: "",
   location: "",
 }
 
@@ -133,9 +81,6 @@ export function ContactForm() {
       `Name: ${values.name}`,
       `Email: ${values.email}`,
       `Phone number: ${values.phone}`,
-      `Budget: ${values.budget}`,
-      `Timeline: ${values.timeline}`,
-      `Project type: ${values.projectType}`,
       `Project location: ${values.location}`,
       "",
       `Inspiration files: ${files.length ? files.join(", ") : "none attached"}`,
@@ -179,32 +124,15 @@ export function ContactForm() {
         >
           <span>{field.label}</span>
 
-          {field.kind === "select" ? (
-            <select
-              name={field.name}
-              value={values[field.name]}
-              aria-invalid={Boolean(errors[field.name])}
-              aria-describedby={`${field.name}-helper ${field.name}-error`}
-              onChange={(event) => update(field.name, event.target.value)}
-            >
-              <option value="">Select…</option>
-              {field.options.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              name={field.name}
-              type={field.type}
-              value={values[field.name]}
-              aria-invalid={Boolean(errors[field.name])}
-              aria-describedby={`${field.name}-helper ${field.name}-error`}
-              required={field.required}
-              onChange={(event) => update(field.name, event.target.value)}
-            />
-          )}
+          <input
+            name={field.name}
+            type={field.type}
+            value={values[field.name]}
+            aria-invalid={Boolean(errors[field.name])}
+            aria-describedby={`${field.name}-helper ${field.name}-error`}
+            required={field.required}
+            onChange={(event) => update(field.name, event.target.value)}
+          />
 
           <small id={`${field.name}-helper`}>{field.helper}</small>
           <strong id={`${field.name}-error`} role="alert">

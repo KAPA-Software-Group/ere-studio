@@ -15,11 +15,44 @@ const gallery = (slug: string, count: number) =>
 
 // Ordered project photographs shown on each detail page (first is the hero).
 const detailImages: Record<string, string[]> = {
-  "parisian-suite": gallery("parisian-suite", 16),
-  "midtown-hideaway": gallery("midtown-hideaway", 17),
+  "parisian-suite": [
+    "/portfolio/parisian-suite/img-1.jpg",
+    "/portfolio/parisian-suite/IMG_0627.jpg",
+    "/portfolio/parisian-suite/IMG_0616.jpg",
+    "/portfolio/parisian-suite/IMG_6681.jpg",
+    "/portfolio/parisian-suite/IMG_0645.jpg",
+    "/portfolio/parisian-suite/IMG_0594.jpg",
+    "/portfolio/parisian-suite/IMG_0648.jpg",
+    "/portfolio/parisian-suite/IMG_0613.jpg",
+    "/portfolio/parisian-suite/IMG_0614.jpg",
+    "/portfolio/parisian-suite/IMG_0600.jpg",
+    "/portfolio/parisian-suite/IMG_0641 2.jpg",
+    "/portfolio/parisian-suite/Dining.png",
+  ],
+  "midtown-hideaway": gallery("midtown-hideaway", 17).filter(
+    (src) => !src.endsWith("/img-10.jpg") && !src.endsWith("/img-12.jpg"),
+  ),
   "little-orange": gallery("little-orange", 7),
-  "artists-escape": gallery("artists-escape", 14),
-  "liberty-village": gallery("liberty-village", 10),
+  "artists-escape": [
+    "/portfolio/artists-escape/img-1.jpg",
+    "/portfolio/artists-escape/matisse new 2.jpg",
+    "/portfolio/artists-escape/FK2A9412.jpg",
+    "/portfolio/artists-escape/FK2A9414 2.jpg",
+    "/portfolio/artists-escape/FK2A9218.jpg",
+    "/portfolio/artists-escape/FK2A9049.jpg",
+    "/portfolio/artists-escape/FK2A9069.jpg",
+    "/portfolio/artists-escape/FK2A9346.jpg",
+    "/portfolio/artists-escape/FK2A9033.jpg",
+    "/portfolio/artists-escape/FK2A9093.jpg",
+    "/portfolio/artists-escape/FK2A9319 2.jpg",
+    "/portfolio/artists-escape/FK2A9436.jpg",
+    "/portfolio/artists-escape/FK2A9333.jpg",
+    "/portfolio/artists-escape/FK2A9285.jpg",
+    "/portfolio/artists-escape/FK2A9408.jpg",
+    "/portfolio/artists-escape/Matisse Bedroom 1.jpg",
+    "/portfolio/artists-escape/FK2A9382.jpg",
+  ],
+  "liberty-village": gallery("liberty-village", 13),
 }
 
 const dev = process.env.NODE_ENV === "development"

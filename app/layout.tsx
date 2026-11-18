@@ -26,9 +26,13 @@ const geistSans = Geist({
 })
 
 export const metadata: Metadata = {
-  title: "ERE Studio - Interior and Spatial Design",
+  title: "ère Studio - Interior and Spatial Design",
   description:
     "ERE Studio is an interior and spatial design practice for residential, hospitality, renovation, and hybrid spaces.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 }
 
 export const viewport: Viewport = {

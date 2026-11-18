@@ -185,10 +185,10 @@ export function SiteHeader() {
         <Link href="/" className="nav-logo" aria-label="ERE Studio home">
           <span className="nav-logo-flip" ref={logoFlipRef}>
             <Image
-              src="/brand/ere-studio-logo.webp"
-              alt="Ere Studio"
-              width={770}
-              height={174}
+              src="/brand/ere-studio-logo.svg"
+              alt="ère studio"
+              width={769}
+              height={173}
               priority
               className="nav-logo-image"
             />

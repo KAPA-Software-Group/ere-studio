@@ -16,6 +16,9 @@ export default function ContactPage() {
       <section className="contact-start-section">
         <div className="contact-start-heading reveal">
           <h1>Start a Project</h1>
+          <a className="contact-phone-button" href="tel:+13055821113">
+            Call +1 (305) 582-1113
+          </a>
         </div>
         <div className="contact-start-form reveal">
           <ContactForm />

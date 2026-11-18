@@ -23,8 +23,12 @@ const slides = [
     alt: "Blue shaker cabinetry with a rounded dining counter and a pink armchair by the window.",
   },
   {
-    src: "/home/slideshow/slide-4.jpg",
-    alt: "Two-level wellness store with potted orange trees and warm timber shelving.",
+    src: "/home/slideshow/artists-escape-living-room.jpg",
+    alt: "Bright Artist's Escape living room with a sculptural woven pendant, built-in shelving, and collected art.",
+  },
+  {
+    src: "/home/slideshow/liberty-village-living-room.jpg",
+    alt: "Liberty Village living room with sculptural seating, a paper lantern, and a poolside photograph.",
   },
   {
     src: "/projects/midtown-hideaway/opening-image-final.jpg",
@@ -60,18 +64,28 @@ export function HomeSlideshow() {
       aria-label="ère studio interiors"
     >
       {slides.map((slide, i) => (
-        <Image
+        <div
           key={slide.src}
-          src={slide.src}
-          alt={slide.alt}
-          fill
-          priority={i === 0}
-          sizes="100vw"
-          className="boots-hero-image hero-slide"
+          className="hero-slide"
           data-active={i === index ? "true" : undefined}
           aria-hidden={i === index ? undefined : "true"}
-          unoptimized={process.env.NODE_ENV === "development"}
-        />
+        >
+          <div className="hero-slide-frame">
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className={`boots-hero-image hero-slide-image${
+                slide.src === "/home/slideshow/slide-3.jpg"
+                  ? " hero-slide-image-native-frame"
+                  : ""
+              }`}
+              unoptimized={process.env.NODE_ENV === "development"}
+            />
+          </div>
+        </div>
       ))}
     </div>
   )

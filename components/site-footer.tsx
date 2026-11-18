@@ -26,7 +26,7 @@ export function SiteFooter() {
 
         <div className="footer-meta">
           <span>Toronto / Miami / Paris</span>
-          <span>Project inquiries open for 2026</span>
+          <span>Project inquiries open for 2027</span>
         </div>
       </div>
 
