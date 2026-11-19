@@ -34,7 +34,7 @@ const detailImages: Record<string, string[]> = {
   ),
   "little-orange": gallery("little-orange", 7),
   "artists-escape": [
-    "/portfolio/artists-escape/img-1.jpg",
+    "/portfolio/artists-escape/FK2A9033.jpg",
     "/portfolio/artists-escape/matisse new 2.jpg",
     "/portfolio/artists-escape/FK2A9412.jpg",
     "/portfolio/artists-escape/FK2A9414 2.jpg",
@@ -42,7 +42,6 @@ const detailImages: Record<string, string[]> = {
     "/portfolio/artists-escape/FK2A9049.jpg",
     "/portfolio/artists-escape/FK2A9069.jpg",
     "/portfolio/artists-escape/FK2A9346.jpg",
-    "/portfolio/artists-escape/FK2A9033.jpg",
     "/portfolio/artists-escape/FK2A9093.jpg",
     "/portfolio/artists-escape/FK2A9319 2.jpg",
     "/portfolio/artists-escape/FK2A9436.jpg",

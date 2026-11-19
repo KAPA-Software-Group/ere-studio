@@ -15,16 +15,20 @@ const covers: Record<string, string> = {
   "parisian-suite": "/portfolio/parisian-suite-cover.jpg",
   "midtown-hideaway": "/portfolio/midtown-hideaway-cover.jpg",
   "little-orange": "/portfolio/little-orange-cover-cropped.jpg",
-  "artists-escape": "/portfolio/me-1.jpg",
+  "artists-escape": "/portfolio/artists-escape/FK2A9033.jpg",
   "liberty-village": "/portfolio/liberty-village-cover.jpg",
 }
 
-// Featured project leads the list; the rest keep their usual order.
-const FEATURED = "midtown-hideaway"
-const orderedProjects = [
-  ...projects.filter((p) => p.slug === FEATURED),
-  ...projects.filter((p) => p.slug !== FEATURED),
-]
+const projectOrder = ["midtown-hideaway", "liberty-village"]
+const orderedProjects = [...projects].sort((a, b) => {
+  const aIndex = projectOrder.indexOf(a.slug)
+  const bIndex = projectOrder.indexOf(b.slug)
+
+  if (aIndex === -1 && bIndex === -1) return 0
+  if (aIndex === -1) return 1
+  if (bIndex === -1) return -1
+  return aIndex - bIndex
+})
 
 export default function PortfolioPage() {
   return (
